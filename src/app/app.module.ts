@@ -8,11 +8,13 @@ import { LoginComponent } from './components/login/login.component';
 import {ModalModule} from "ngx-bootstrap/modal";
 import {ReactiveFormsModule} from "@angular/forms";
 import {
+  FacebookLoginProvider,
   GoogleLoginProvider,
   GoogleSigninButtonModule,
   SocialAuthServiceConfig,
   SocialLoginModule
 } from "@abacritt/angularx-social-login";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import {
     ModalModule.forRoot(),
     ReactiveFormsModule,
     SocialLoginModule,
-    GoogleSigninButtonModule
+    GoogleSigninButtonModule,
+    HttpClientModule
 
   ],
   providers: [
@@ -38,8 +41,11 @@ import {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider('902213864397-r88n97ocfudhkgv4vagle3tbmrmve9dc.apps.googleusercontent.com'),
-
           },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('970835071296481'),
+          }
         ],
         onError: (err) => {
 
