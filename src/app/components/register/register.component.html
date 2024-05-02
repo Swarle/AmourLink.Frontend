@@ -8,11 +8,34 @@
       Зареєструватися
     </div>
     <div class="auth__form">
-      <form>
-        <input placeholder="Логін" type="text" class="auth__input">
-        <input placeholder="Пароль" type="password" class="auth__input">
-        <input placeholder="Підтвердіть пароль" type="password" class="auth__input">
-        <button type="submit" class="button button-gradient auth__btn-submit">Зареєструватися</button>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div  class="auth__input">
+          <app-text-input
+            [formControl]="$any(registerForm.controls['login'])"
+            [placeholder]="'Логін'"
+            [errorMap]="loginValidationErrors"
+          ></app-text-input>
+        </div>
+        <div class="auth__input">
+          <app-text-input
+            [formControl]="$any(registerForm.controls['password'])"
+            [type]="'password'"
+            [placeholder]="'Пароль'"
+            [errorMap]="passwordValidationErrors"
+          ></app-text-input>
+        </div>
+        <div class="auth__input">
+          <app-text-input
+            [formControl]="$any(registerForm.controls['confirmPassword'])"
+            [type]="'password'"
+            [placeholder]="'Підтвердіть пароль'"
+            [errorMap]="confirmPasswordValidationErrors"
+          ></app-text-input>
+        </div>
+        <button
+          [disabled]="registerForm.invalid"
+          [class.auth__btn-disabled]="registerForm.invalid"
+          type="submit" class="button button-gradient auth__btn-submit">Зареєструватися</button>
       </form>
     </div>
     <div class="auth__subtext">Або увійдіть через</div>

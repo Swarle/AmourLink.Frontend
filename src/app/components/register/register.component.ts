@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AppComponent} from "../../app.component";
-import {SocialAuthService} from "@abacritt/angularx-social-login";
+import {FacebookLoginProvider, SocialAuthService} from "@abacritt/angularx-social-login";
 import {AccountService} from "../../services/account.service";
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-register',
@@ -10,12 +11,28 @@ import {AccountService} from "../../services/account.service";
 })
 export class RegisterComponent implements OnInit{
   parentComponent?: AppComponent;
+  registerForm: FormGroup = new FormGroup({});
+  loginValidationErrors: Map<string, string> = new Map([
+    ["required", "Логін обов'язковий"]
+  ]);
+  passwordValidationErrors: Map<string, string>  = new Map([
+    ["required", "Пароль обов'язковий"],
+    ["minlength", "Пароль має містити мінімум 4 символи"]
+  ]);
+  confirmPasswordValidationErrors: Map<string, string>
+    = new Map([
+      ["required", "Пароль підтведження обов'язковий"],
+      ["notMatching", "Паролі не співпадають"]
+    ]);
 
 
-  constructor(private authService: SocialAuthService, private accountService: AccountService) {
+  constructor(private authService: SocialAuthService, private accountService: AccountService,
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
+    this.initializeForm();
+
     this.authService.authState.subscribe((user) => {
       if(user != null){
         if(user.provider == "GOOGLE")
@@ -24,6 +41,34 @@ export class RegisterComponent implements OnInit{
           this.accountService.loginWithFacebook(user);
       }
     });
+  }
+
+  initializeForm(){
+    this.registerForm = this.formBuilder.group({
+      login: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      confirmPassword: ['', [Validators.required, this.matchValues('password')]]
+    });
+
+    this.registerForm.controls['password'].valueChanges.subscribe({
+      next: () => this.registerForm.controls['confirmPassword'].updateValueAndValidity()
+    });
+
+    console.log(this.registerForm);
+  }
+
+  matchValues(matchTo: string): ValidatorFn{
+    return (control: AbstractControl) => {
+      return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching: true}
+    }
+  }
+
+  onSubmit(){
+    console.log(this.registerForm.value)
+  }
+
+  loginWithFacebook(){
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
   openLoginModal(){

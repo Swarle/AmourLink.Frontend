@@ -8,10 +8,25 @@
       Увійдіть
     </div>
     <div class="auth__form">
-      <form>
-        <input placeholder="Логін" type="text" class="auth__input">
-        <input placeholder="Пароль" type="password" class="auth__input">
-        <button type="submit" class="button button-gradient auth__btn-submit">Увійти</button>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"  autocomplete="off">
+        <div class="auth__input">
+          <app-text-input
+            [formControl]="$any(loginForm.controls['login'])"
+            [placeholder]="'Логін'"
+            [errorMap]="loginValidationErrors"
+          ></app-text-input>
+        </div>
+        <div class="auth__input">
+          <app-text-input
+            [formControl]="$any(loginForm.controls['password'])"
+            [type]="'password'"
+            [placeholder]="'Пароль'"
+            [errorMap]="passwordValidationErrors"
+          ></app-text-input>
+        </div>
+        <button [disabled]="loginForm.invalid"
+                [class.auth__btn-disabled]="loginForm.invalid"
+                type="submit" class="button button-gradient auth__btn-submit">Увійти</button>
       </form>
     </div>
     <div class="auth__subtext">Або увійдіть через</div>
