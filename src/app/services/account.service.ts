@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {SocialUser} from "@abacritt/angularx-social-login";
 import {UserLogin} from "../models/userLogin";
+import {UserRegister} from "../models/userRegister";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-
   baseUrl = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) { }
@@ -18,12 +17,19 @@ export class AccountService {
     return this.httpClient.post(this.baseUrl + 'userService/account/verifyTokenId', tokenId);
   }
 
-  loginWithFacebook(user: SocialUser){
+  loginWithFacebook(authToken: string){
     //TODO:Make method when endpoint will be
-    console.log();
+    return this.httpClient.post(this.baseUrl + 'userService/account/login-with-facebook', authToken);
   }
 
   loginWithUserInfo(user: UserLogin){
+    //TODO:Pipe response
     return this.httpClient.post(this.baseUrl + 'userService/account/login', user);
   }
+
+  registerWithUserInfo(user: UserRegister){
+    //TODO:Pipe response
+    return this.httpClient.post(this.baseUrl + 'usersService/account/register', user);
+  }
+
 }

@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit{
         if(user.provider == "GOOGLE")
           this.accountService.verifyGoogleIdToken(user.idToken);
         else if(user.provider == "FACEBOOK")
-          this.accountService.loginWithFacebook(user);
+          this.accountService.loginWithFacebook(user.authToken);
 
         //TODO: There are will be redirect to main page
       }

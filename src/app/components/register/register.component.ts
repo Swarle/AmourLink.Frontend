@@ -35,10 +35,11 @@ export class RegisterComponent implements OnInit{
 
     this.authService.authState.subscribe((user) => {
       if(user != null){
+        console.log(user);
         if(user.provider == "GOOGLE")
           this.accountService.verifyGoogleIdToken(user.idToken);
         else if(user.provider == "FACEBOOK")
-          this.accountService.loginWithFacebook(user);
+          this.accountService.loginWithFacebook(user.authToken);
       }
     });
   }
@@ -64,7 +65,11 @@ export class RegisterComponent implements OnInit{
   }
 
   onSubmit(){
-    console.log(this.registerForm.value)
+    this.accountService.registerWithUserInfo(this.registerForm.value).subscribe({
+      next:  () => {
+        //TODO: There will be redirect to main page
+      }
+    })
   }
 
   loginWithFacebook(){
