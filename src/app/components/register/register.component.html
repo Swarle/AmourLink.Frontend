@@ -1,17 +1,18 @@
 <script src="https://accounts.google.com/gsi/client" async></script>
-<section class="login">
+<section class="register">
   <div class="auth">
     <div class="auth__logo">
       <img src="assets/img/logo-mini.svg" alt="">
     </div>
     <div class="auth__text">
-      Увійдіть
+      Зареєструватися
     </div>
     <div class="auth__form">
       <form>
         <input placeholder="Логін" type="text" class="auth__input">
         <input placeholder="Пароль" type="password" class="auth__input">
-        <button type="submit" class="button button-gradient auth__btn-submit">Увійти</button>
+        <input placeholder="Підтвердіть пароль" type="password" class="auth__input">
+        <button type="submit" class="button button-gradient auth__btn-submit">Зареєструватися</button>
       </form>
     </div>
     <div class="auth__subtext">Або увійдіть через</div>
@@ -26,7 +27,7 @@
         logo_alignment="left"
         width="290"
       ></asl-google-signin-button>
-      <div class="auth__item" (click)="loginWithFacebook()">
+      <div class="auth__item">
         <div class="auth__item-logo">
           <img src="assets/icons/icon_Facebook.svg" alt="">
         </div>
@@ -36,10 +37,11 @@
       </div>
     </div>
     <div class="auth__also">
-      Ще немає аккаунту?
-      <span (click)="openRegisterModal()">Зареєеструватися</span>
+      Вже маєте аккаунт?
+      <span (click)="openLoginModal()">Увійти</span>
     </div>
   </div>
 </section>
+
 
 
