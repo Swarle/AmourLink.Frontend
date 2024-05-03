@@ -1,0 +1,16 @@
+.register{
+  .auth{
+    padding: 15px 40px 15px 40px;
+    &__logo{
+      margin: 0 auto 8px auto;
+    }
+    &__text{
+      margin-bottom: 20px;
+    }
+    &__btn{
+      &-submit{
+        margin: 26px auto 20px auto;
+      }
+    }
+  }
+}

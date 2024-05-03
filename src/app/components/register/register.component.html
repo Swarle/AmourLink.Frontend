@@ -1,32 +1,41 @@
 <script src="https://accounts.google.com/gsi/client" async></script>
-<section class="login">
+<section class="register">
   <div class="auth">
     <div class="auth__logo">
       <img src="assets/img/logo-mini.svg" alt="">
     </div>
     <div class="auth__text">
-      Увійдіть
+      Зареєструватися
     </div>
     <div class="auth__form">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"  autocomplete="off">
-        <div class="auth__input">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div  class="auth__input">
           <app-text-input
-            [formControl]="$any(loginForm.controls['login'])"
+            [formControl]="$any(registerForm.controls['email'])"
             [placeholder]="'Імейл'"
             [errorMap]="loginValidationErrors"
           ></app-text-input>
         </div>
         <div class="auth__input">
           <app-text-input
-            [formControl]="$any(loginForm.controls['password'])"
+            [formControl]="$any(registerForm.controls['password'])"
             [type]="'password'"
             [placeholder]="'Пароль'"
             [errorMap]="passwordValidationErrors"
           ></app-text-input>
         </div>
-        <button [disabled]="loginForm.invalid"
-                [class.auth__btn-disabled]="loginForm.invalid"
-                type="submit" class="button button-gradient auth__btn-submit">Увійти</button>
+        <div class="auth__input">
+          <app-text-input
+            [formControl]="$any(registerForm.controls['confirmPassword'])"
+            [type]="'password'"
+            [placeholder]="'Підтвердіть пароль'"
+            [errorMap]="confirmPasswordValidationErrors"
+          ></app-text-input>
+        </div>
+        <button
+          [disabled]="registerForm.invalid"
+          [class.auth__btn-disabled]="registerForm.invalid"
+          type="submit" class="button button-gradient auth__btn-submit">Зареєструватися</button>
       </form>
     </div>
     <div class="auth__subtext">Або увійдіть через</div>
@@ -51,10 +60,11 @@
       </div>
     </div>
     <div class="auth__also">
-      Ще немає аккаунту?
-      <span (click)="openRegisterModal()">Зареєеструватися</span>
+      Вже маєте аккаунт?
+      <span (click)="openLoginModal()">Увійти</span>
     </div>
   </div>
 </section>
+
 
 

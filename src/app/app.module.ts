@@ -15,11 +15,15 @@ import {
   SocialLoginModule
 } from "@abacritt/angularx-social-login";
 import {HttpClientModule} from "@angular/common/http";
+import { RegisterComponent } from './components/register/register.component';
+import { TextInputComponent } from './components/text-input/text-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent,
+    TextInputComponent
   ],
   imports: [
     BrowserModule,
