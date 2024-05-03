@@ -11,8 +11,8 @@
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
         <div  class="auth__input">
           <app-text-input
-            [formControl]="$any(registerForm.controls['login'])"
-            [placeholder]="'Логін'"
+            [formControl]="$any(registerForm.controls['email'])"
+            [placeholder]="'Імейл'"
             [errorMap]="loginValidationErrors"
           ></app-text-input>
         </div>

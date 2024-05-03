@@ -3,6 +3,7 @@ import {AppComponent} from "../../app.component";
 import {FacebookLoginProvider, SocialAuthService} from "@abacritt/angularx-social-login";
 import {AccountService} from "../../services/account.service";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {passwordRegex} from "../../helpers/passwordRegex";
 
 @Component({
   selector: 'app-register',
@@ -13,17 +14,21 @@ export class RegisterComponent implements OnInit{
   parentComponent?: AppComponent;
   registerForm: FormGroup = new FormGroup({});
   loginValidationErrors: Map<string, string> = new Map([
-    ["required", "Логін обов'язковий"]
+    ["required", "Імейл обов'язковий"],
+    ['email', "Некоректний імейл"]
   ]);
   passwordValidationErrors: Map<string, string>  = new Map([
     ["required", "Пароль обов'язковий"],
-    ["minlength", "Пароль має містити мінімум 4 символи"]
+    ["minlength", "Пароль має містити мінімум 4 символи"],
+    ["pattern", "Пароль не вірного формату"]
   ]);
   confirmPasswordValidationErrors: Map<string, string>
     = new Map([
       ["required", "Пароль підтведження обов'язковий"],
-      ["notMatching", "Паролі не співпадають"]
+      ["notMatching", "Паролі не співпадають"],
+      ["pattern", "Пароль не вірного формату"]
     ]);
+
 
 
   constructor(private authService: SocialAuthService, private accountService: AccountService,
@@ -35,7 +40,6 @@ export class RegisterComponent implements OnInit{
 
     this.authService.authState.subscribe((user) => {
       if(user != null){
-        console.log(user);
         if(user.provider == "GOOGLE")
           this.accountService.verifyGoogleIdToken(user.idToken);
         else if(user.provider == "FACEBOOK")
@@ -46,16 +50,14 @@ export class RegisterComponent implements OnInit{
 
   initializeForm(){
     this.registerForm = this.formBuilder.group({
-      login: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      confirmPassword: ['', [Validators.required, this.matchValues('password')]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.pattern(passwordRegex)]],
+      confirmPassword: ['', [Validators.required, this.matchValues('password'), Validators.pattern(passwordRegex)]]
     });
 
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () => this.registerForm.controls['confirmPassword'].updateValueAndValidity()
     });
-
-    console.log(this.registerForm);
   }
 
   matchValues(matchTo: string): ValidatorFn{

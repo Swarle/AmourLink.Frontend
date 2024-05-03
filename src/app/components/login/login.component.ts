@@ -3,6 +3,7 @@ import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthService} from "@ab
 import {AccountService} from "../../services/account.service";
 import {AppComponent} from "../../app.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {passwordRegex} from "../../helpers/passwordRegex";
 
 
 @Component({
@@ -14,11 +15,13 @@ export class LoginComponent implements OnInit{
   parentComponent?: AppComponent;
   loginForm: FormGroup = new FormGroup({});
   loginValidationErrors: Map<string, string> = new Map([
-    ["required", "Логін обов'язковий"]
+    ["required", "Імейл обов'язковий"],
+    ["email", "Некоректний Імейл"]
   ]);
   passwordValidationErrors: Map<string, string>  = new Map([
     ["required", "Пароль обов'язковий"],
-    ["minlength", "Пароль має містити мінімум 4 символи"]
+    ["minlength", "Пароль має містити мінімум 4 символи"],
+    ['pattern', 'Пароль не вірного формату']
   ])
 
 
@@ -52,8 +55,8 @@ export class LoginComponent implements OnInit{
 
   private initializeForm(){
     this.loginForm = this.formBuilder.group({
-      login: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4)]]
+      email: ['', Validators.required, Validators.email],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.pattern(passwordRegex)]]
     });
   }
 
