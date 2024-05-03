@@ -49,12 +49,136 @@
   }
 }
 
-.modal-login{
+.modal_auth{
   background-color: #111418;
   width: 440px;
   .modal-content{
     background-color: #111418;
     border: none;
     border-radius: 0;
+  }
+}
+
+.auth{
+  padding: 40px 40px 15px 40px;
+  color: #ffffff;
+  &__logo{
+    width: fit-content;
+    margin: 0 auto 15px auto;
+    img{
+      width: 60px;
+      height: 60px;
+    }
+  }
+  &__text{
+    text-align: center;
+    font-weight: 800;
+    font-size: 36px;
+    margin-bottom: 31px;
+  }
+  &__input{
+    margin-bottom: 18px;
+    input{
+      display: block;
+      padding: 11px 20px 11px 46px;
+      border-radius: 30px;
+      width: 360px;
+      height: 50px;
+      background-color: #21262e;
+      font-size: 24px;
+      color: #fff;
+      border: none;
+    }
+    .is-invalid{
+
+      border: 2px darkred solid;
+    }
+    .invalid-feedback{
+      margin-left: 15px;
+    }
+  }
+  &__btn{
+    &-disabled{
+      background: gray;
+    }
+    &-submit{
+      margin: 26px auto 35px auto;
+      width: 280px;
+      height: 60px;
+    }
+  }
+  &__subtext{
+    position: relative;
+    text-align: center;
+    font-weight: 800;
+    font-size: 16px;
+    color: #ffffff;
+    margin-bottom: 13px;
+    &:before, &:after{
+      top: 50%;
+      transform: translateY(-50%);
+      content: '';
+      position: absolute;
+      width: 94px;
+      height: 1px;
+      background-color: #ffffff;
+    }
+    &:before{
+      left: -12px;
+    }
+    &:after{
+      right: -12px;
+    }
+  }
+  &__items{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    margin-bottom: 18px;
+  }
+  &__item{
+    position: relative;
+    background-color: rgb(32, 33, 36);
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    width: 290px;
+    height: 40px;
+    padding: 0 12px;
+    transition: 0.6s;
+    &:last-child{
+      margin-bottom: 0;
+    }
+    &-logo{
+      width: fit-content;
+      position: absolute;
+      left: 1px;
+      img{
+        height: 36px;
+        width: 36px;
+      }
+    }
+    &-text{
+      margin-left: 35px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    &:hover{
+      cursor: pointer;
+      background: rgba(255, 255, 255, .24);
+    }
+  }
+  &__also{
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    span{
+      font-weight: 800;
+      &:hover{
+        cursor: pointer;
+      }
+    }
   }
 }

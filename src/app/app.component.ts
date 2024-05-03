@@ -1,6 +1,8 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {LoginComponent} from "./components/login/login.component";
+import {RegisterComponent} from "./components/register/register.component";
+import {initialState} from "ngx-bootstrap/timepicker/reducer/timepicker.reducer";
 
 @Component({
   selector: 'app-root',
@@ -9,13 +11,21 @@ import {LoginComponent} from "./components/login/login.component";
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  bsModalRef?: BsModalRef<LoginComponent>;
-
+  bsLoginModalRef?: BsModalRef<LoginComponent>;
+  bsRegisterModalRef?: BsModalRef<RegisterComponent>;
 
   constructor(private modalService: BsModalService) {
   }
 
   openLoginModal(){
-    this.bsModalRef = this.modalService.show(LoginComponent, Object.assign({}, {class: 'modal-login'}));
+    this.bsLoginModalRef = this.modalService.show(LoginComponent,
+        Object.assign({}, {class: 'modal_auth'}));
+    this.bsLoginModalRef.content!.parentComponent = this;
+  }
+
+  openRegisterModal(){
+    this.bsRegisterModalRef = this.modalService.show(RegisterComponent,
+        Object.assign({}, {class: 'modal_auth'}));
+    this.bsRegisterModalRef.content!.parentComponent = this;
   }
 }
