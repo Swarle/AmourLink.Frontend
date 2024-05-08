@@ -2,7 +2,6 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
-import {initialState} from "ngx-bootstrap/timepicker/reducer/timepicker.reducer";
 
 @Component({
   selector: 'app-root',

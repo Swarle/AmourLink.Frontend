@@ -1,5 +1,5 @@
 export enum ResponseType{
-  Succsess,
+  Success,
   HttpError,
   ValidationError
 }
