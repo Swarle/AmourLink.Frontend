@@ -17,13 +17,15 @@ import {
 import {HttpClientModule} from "@angular/common/http";
 import { RegisterComponent } from './components/register/register.component';
 import { TextInputComponent } from './components/text-input/text-input.component';
+import { MainPageComponent } from './components/main-page/main-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    TextInputComponent
+    TextInputComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,6 @@ import { TextInputComponent } from './components/text-input/text-input.component
     SocialLoginModule,
     GoogleSigninButtonModule,
     HttpClientModule
-
   ],
   providers: [
     {

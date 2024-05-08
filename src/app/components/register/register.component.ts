@@ -4,6 +4,7 @@ import {FacebookLoginProvider, SocialAuthService} from "@abacritt/angularx-socia
 import {AccountService} from "../../services/account.service";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {passwordRegex} from "../../helpers/passwordRegex";
+import {MainPageComponent} from "../main-page/main-page.component";
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ import {passwordRegex} from "../../helpers/passwordRegex";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit{
-  parentComponent?: AppComponent;
+  parentComponent?: MainPageComponent;
   registerForm: FormGroup = new FormGroup({});
   loginValidationErrors: Map<string, string> = new Map([
     ["required", "Імейл обов'язковий"],
