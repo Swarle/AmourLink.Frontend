@@ -14,10 +14,11 @@ import {
   SocialAuthServiceConfig,
   SocialLoginModule
 } from "@abacritt/angularx-social-login";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { RegisterComponent } from './components/register/register.component';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import {ErrorInterceptor} from "./interceptors/error.interceptor";
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { MainPageComponent } from './components/main-page/main-page.component';
         },
       } as SocialAuthServiceConfig,
     },
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

@@ -4,7 +4,7 @@ import {Info} from "./info";
 import {Question} from "./question";
 
 export interface Member{
-  userId: string;
+  Id: string;
   firstName: string;
   lastName?: string;
   age: number;
@@ -13,8 +13,10 @@ export interface Member{
   occupation?: string;
   nationality?: string;
   gender: string;
-  lastLocationLongitude: number;
-  lastLocationLatitude: number;
+  location: {
+    latitude: number,
+    longitude: number
+  }
   hobbie: string;
   pictures: Picture[];
   degree?: Degree;

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Member} from "../../../../models/member";
+import {Member} from "../../../../models/userModels/member";
 import {RecommendationService} from "../../services/recommendation.service";
+import {HttpErrorContent} from "../../../../models/apiInfrastructure/httpErrorContent";
 
 @Component({
   selector: 'app-recomendation',
@@ -19,7 +20,16 @@ export class RecommendationComponent implements OnInit{
     this.getUserGeolocation();
 
       this.recommendationService.getMember().subscribe({
-        next: member => this.member = member
+        next: member => {
+          if(member){
+            if(member)
+              this.member = member;
+          }
+
+        },
+        error: (err: HttpErrorContent<Member>) => {
+          console.log(err);
+      }
       })
     }
 
@@ -40,12 +50,12 @@ export class RecommendationComponent implements OnInit{
   }
 
   calculateDistance(member: Member): number{
-    if(this.geolocation){
+    if(this.geolocation && member.location){
       const earthRadius = 6371; // Радіус Землі в кілометрах
       const userLatitude = this.geolocation.latitude;
-      const memberLatitude = member.lastLocationLatitude;
+      const memberLatitude = member.location.latitude;
       const userLongitude = this.geolocation.longitude;
-      const memberLongitude = member.lastLocationLongitude;
+      const memberLongitude = member.location.longitude;
 
       const dLat = this.toRadians(memberLatitude - userLatitude);
       const dLon = this.toRadians(memberLongitude - userLongitude);
