@@ -6,6 +6,7 @@ import { RecommendationComponent } from './components/recomendation/recommendati
 import {CarouselModule} from "ngx-bootstrap/carousel";
 import {ErrorInterceptor} from "../../interceptors/error.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JwtInterceptor} from "../../interceptors/jwt.interceptor";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
   ]
 })
 export class CoreModuleModule { }

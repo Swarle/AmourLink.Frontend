@@ -100,11 +100,13 @@
   <div class="recommendation__buttons" *ngIf="geolocation">
     <button class="recommendation__button">
     </button>
-    <button class="recommendation__button recommendation__button-big">
+    <button (click)="dislike()" class="recommendation__button recommendation__button-big recommendation__button-dislike">
+      <div>&#10005;</div>
     </button>
     <button class="recommendation__button">
     </button>
-    <button class="recommendation__button recommendation__button-big">
+    <button (click)="like()" class="recommendation__button recommendation__button-big recommendation__button-like">
+      <div class="fa fa-heart fa-2x"></div>
     </button>
     <button class="recommendation__button">
     </button>

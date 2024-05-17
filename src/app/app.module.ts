@@ -19,6 +19,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { TextInputComponent } from './components/text-input/text-input.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import {ErrorInterceptor} from "./interceptors/error.interceptor";
+import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import {ErrorInterceptor} from "./interceptors/error.interceptor";
       } as SocialAuthServiceConfig,
     },
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

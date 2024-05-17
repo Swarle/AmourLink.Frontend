@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Member} from "../../../../models/userModels/member";
 import {RecommendationService} from "../../services/recommendation.service";
 import {HttpErrorContent} from "../../../../models/apiInfrastructure/httpErrorContent";
+import {MemberPagination} from "../../../../models/pagiantion/memberPagination";
 
 @Component({
   selector: 'app-recomendation',
@@ -12,6 +13,8 @@ export class RecommendationComponent implements OnInit{
   title = 'Знайомства';
   member?: Member;
   geolocation?: GeolocationCoordinates;
+  pagination?: MemberPagination;
+  pageNumber = 1;
 
   constructor(private recommendationService: RecommendationService) {
   }
@@ -19,20 +22,31 @@ export class RecommendationComponent implements OnInit{
   ngOnInit(): void {
     this.getUserGeolocation();
 
-      this.recommendationService.getMember().subscribe({
-        next: member => {
-          if(member){
-            if(member)
-              this.member = member;
-          }
+    this.loadMember()
+  }
 
-        },
-        error: (err: HttpErrorContent<Member>) => {
-          console.log(err);
+  loadMember(){
+    this.recommendationService.getMember(this.pageNumber).subscribe({
+      next: response => {
+        this.member = response.result;
+        this.pagination = response.pagination;
+        this.pageNumber++;
+      },
+      error: (err: HttpErrorContent<Member>) => {
+        console.log(err);
       }
-      })
-    }
+    });
+  }
 
+  like(){
+    //TODO: Implement request to swipe service
+    this.loadMember();
+  }
+
+  dislike(){
+    //TODO: Implement request to swipe service
+    this.loadMember();
+  }
 
   private getUserGeolocation(){
     navigator.geolocation.watchPosition(

@@ -6,7 +6,8 @@ import {map} from "rxjs";
 
 export function getMemberPaginatedResult(url: string, params: HttpParams, httpClient: HttpClient){
   const paginatedResult = new PaginatedMemberResult();
-  return httpClient.get<ApiResponse<Member>>(url, {observe: 'response', params}).pipe(
+
+  return httpClient.get<ApiResponse<Member>>(url, {observe: 'response',params: params}).pipe(
     map(response => {
       if(response.body){
         paginatedResult.result = response.body.result;
