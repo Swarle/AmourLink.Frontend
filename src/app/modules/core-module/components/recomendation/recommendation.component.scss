@@ -1,0 +1,224 @@
+@keyframes swipeLeft {
+  0% {
+    transform: translateX(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%) rotate(-30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes swipeRight {
+  0% {
+    transform: translateX(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+.swipe-left {
+  animation: swipeLeft 0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+.swipe-right {
+  animation: swipeRight 0.5s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+}
+
+
+
+.recommendation{
+  position: relative;
+  padding-top: -2px;
+  width: 100%;
+  height: 100%;
+  padding-bottom: -2px;
+  &__buttons{
+    z-index: 5;
+    position: absolute;
+    height: 90px;
+    width: 648.4px;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 86px;
+  }
+  &__button{
+    border: none;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, .1);
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-big{
+      height: 66px;
+      width: 66px;
+    }
+    &-dislike{
+      div{
+        font-weight: 800;
+        font-size: 35px;
+      }
+    }
+  }
+  &__card{
+    position: absolute;
+    padding-bottom: 205px;
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid gray;
+    background-color: #f0ecec;
+    &:before, &:after{
+      content: '';
+      position: absolute;
+      z-index: 1;
+      height: 90px;
+      width: 649px;
+    }
+    &:after{
+      top: 0;
+      border-top-right-radius: 20px;
+      border-top-left-radius: 20px;
+      background: linear-gradient(rgba(0, 0, 0, .53), transparent);
+    }
+    &:before{
+      bottom: 0;
+      border-bottom-right-radius: 20px;
+      border-bottom-left-radius: 20px;
+      background: linear-gradient(transparent, rgba(0, 0, 0, .53));
+    }
+    &-scroller{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      padding-bottom: 200px;
+      &::-webkit-scrollbar{
+        display: none;
+      }
+    }
+  }
+  &__carousel{
+    z-index: -1;
+    width: 100%;
+    height: 574px;
+    img{
+      object-fit: cover;
+      object-position: 45% 35%;
+      height: 574px;
+      width: 100%;
+    }
+  }
+  &__info{
+    padding: 13px 22px 0 22px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min-content, max-content));
+    grid-gap: 41px;
+    &-wrapper{
+      position: relative;
+      &:before{
+        content: '';
+        height: 1px;
+        width: 100%;
+        background-color: black;
+        position: absolute;
+        bottom: -21px;
+      }
+      &:last-child{
+        &:before{
+          height: 0;
+        }
+      }
+    }
+  }
+  &__head{
+    &-header{
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+    &-degree{
+      max-width: 360px;
+    }
+    &-list{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min-content, max-content));
+      grid-gap: 10px;
+    }
+    &-item{
+      display: flex;
+      gap: 6px;
+      &-text{
+        font-size: 16px;
+        font-weight: 600;
+      }
+      img{
+        display: block;
+      }
+    }
+  }
+  &__want{
+    margin-top: 15px;
+    display: flex;
+    gap: 20px;
+    height: 70px;
+    background-color: #dbdbdb;
+    border-radius: 15px;
+    padding: 15px 22px;
+    align-items: center;
+    &-text{
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+  &__bio{
+    &-text{
+      margin-top: 10px;
+    }
+  }
+  &__bouble{
+    margin-top: 10px;
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    &-item{
+      width: fit-content;
+      background-color: #d9d9d9;
+      border-radius: 10px;
+      padding: 2px 10px;
+      .recommendation__font{
+        text-align: center;
+      }
+    }
+  }
+  &__questions{
+  }
+  &__question{
+    margin-top: 22px;
+    &:first-child{
+      margin-top: 0;
+    }
+    &-answer{
+      font-size: 20px;
+      font-weight: 600;
+
+    }
+  }
+  &__font{
+    font-size: 17px;
+    font-weight: 600;
+    color: black;
+  }
+  &__font-subtitle{
+    color: rgba(0, 0, 0, 0.6);
+  }
+}

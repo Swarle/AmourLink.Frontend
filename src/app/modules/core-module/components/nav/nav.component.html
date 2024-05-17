@@ -1,0 +1,13 @@
+<div class="container__wrapper">
+  <section class="nav">
+    <div class="nav__title">
+      {{title}}
+    </div>
+    <div class="nav__wrapper">
+        <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+    </div>
+    <div class="nav__footer">
+      Test info
+    </div>
+  </section>
+</div>

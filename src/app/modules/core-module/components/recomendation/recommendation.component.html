@@ -1,0 +1,119 @@
+<section class="recommendation">
+  <div class="recommendation__card" *ngIf="geolocation && member">
+    <div class="recommendation__card-scroller">
+      <div class="recommendation__carousel">
+        <carousel [interval]="0" >
+          <slide *ngFor="let picture of member.pictures">
+            <img src="{{picture.pictureUrl}}" alt="">
+          </slide>
+        </carousel>
+      </div>
+      <div class="recommendation__info">
+        <div class="recommendation__info-wrapper">
+          <div class="recommendation__head">
+            <div class="recommendation__head-header">
+              {{member.firstName}} {{member.lastName}} {{member.age}}
+            </div>
+            <div class="recommendation__head-list">
+              <div class="recommendation__head-item">
+                <img src="./assets/icons/recommendationPage/home.svg" alt="">
+                <div class="recommendation__head-item-text">Живе в місті Київ</div>
+              </div>
+              <div class="recommendation__head-item">
+                <img src="./assets/icons/recommendationPage/map_marker.svg" alt="">
+                <div class="recommendation__head-item-text">В діапазоні {{calculateDistance(member)}} км</div>
+              </div>
+              <div class="recommendation__head-item">
+                <img src="./assets/icons/recommendationPage/ruler.svg" alt="">
+                <div class="recommendation__head-item-text">{{member.height}} см</div>
+              </div>
+              <div class="recommendation__head-item" *ngIf="member.degree">
+                <img src="./assets/icons/recommendationPage/graduation_cap.svg" alt="">
+                <div class="recommendation__head-item-text recommendation__head-degree">
+                  {{member.degree.schoolName}} ({{member.degree.degreeType}})
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="recommendation__info-wrapper">
+          <div class="recommendation__font-subtitle">
+            Чого хоче {{member.firstName}}?
+          </div>
+          <div class="recommendation__want">
+            <div class="recommendation__want-icon">
+              <img src="./assets/icons/recommendationPage/icon_comment.svg" alt="">
+            </div>
+            <div class="recommendation__want-text">
+              <!--            TODO: Change this to variable -->
+              Просто спілкуватися
+            </div>
+          </div>
+        </div>
+        <div class="recommendation__info-wrapper" *ngIf="member.bio">
+          <div class="recommendation__font-subtitle">
+            Про себе
+          </div>
+          <div class="recommendation__bio-text recommendation__font">
+            {{member.bio}}
+          </div>
+        </div>
+        <div class="recommendation__info-wrapper" *ngIf="member.infos">
+          <div class="recommendation__font-subtitle">
+            Головне
+          </div>
+          <div class="recommendation__bouble">
+            <div class="recommendation__bouble-item" *ngFor="let info of member.infos">
+              <div class="recommendation__font">
+                {{info.infoAnswer}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="recommendation__info-wrapper" *ngIf="member.questions">
+          <div class="recommendation__questions">
+            <div class="recommendation__question" *ngFor="let question of member.questions">
+              <div class="recommendation__font-subtitle">
+                {{question.questionTitle}}
+              </div>
+              <div class="recommendation__question-answer">
+                {{question.questionAnswer}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="recommendation__info-wrapper" *ngIf="member.interests">
+          <div class="recommendation__interests">
+            <div class="recommendation__font-subtitle">
+              Інтереси
+            </div>
+            <div class="recommendation__bouble">
+              <div class="recommendation__bouble-item" *ngFor="let interest of member.interests">
+                <div class="recommendation__font">
+                  #{{interest}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="recommendation__buttons">
+      <button class="recommendation__button">
+      </button>
+      <button (click)="dislike()" class="recommendation__button recommendation__button-big recommendation__button-dislike">
+        <div>&#10005;</div>
+      </button>
+      <button class="recommendation__button">
+      </button>
+      <button (click)="like()" class="recommendation__button recommendation__button-big recommendation__button-like">
+        <div class="fa fa-heart fa-2x"></div>
+      </button>
+      <button class="recommendation__button">
+      </button>
+    </div>
+  </div>
+  <div class="recommendation__geolocation"  *ngIf="!geolocation">
+    geolocation undefined
+  </div>
+</section>

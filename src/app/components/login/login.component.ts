@@ -4,6 +4,7 @@ import {AccountService} from "../../services/account.service";
 import {AppComponent} from "../../app.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {passwordRegex} from "../../helpers/passwordRegex";
+import {MainPageComponent} from "../main-page/main-page.component";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {passwordRegex} from "../../helpers/passwordRegex";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
-  parentComponent?: AppComponent;
+  parentComponent?: MainPageComponent;
   loginForm: FormGroup = new FormGroup({});
   loginValidationErrors: Map<string, string> = new Map([
     ["required", "Імейл обов'язковий"],
