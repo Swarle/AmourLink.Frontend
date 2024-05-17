@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Member} from "../../../../models/userModels/member";
 import {RecommendationService} from "../../services/recommendation.service";
 import {HttpErrorContent} from "../../../../models/apiInfrastructure/httpErrorContent";
@@ -40,12 +40,29 @@ export class RecommendationComponent implements OnInit{
 
   like(){
     //TODO: Implement request to swipe service
-    this.loadMember();
+    this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
   }
 
   dislike(){
     //TODO: Implement request to swipe service
-    this.loadMember();
+    this.animateSwipe('.recommendation__card','swipe-left', 'animate__fadeIn');
+  }
+
+  private animateSwipe(selector: string, outAnimation: string, inAnimation: string){
+    const el = document.querySelector(selector);
+    if(el){
+      el.classList.add(outAnimation);
+
+      setTimeout(() => {
+        this.loadMember();
+        el.classList.remove(outAnimation);
+        el.classList.add('animate__animated',inAnimation);
+
+        setTimeout(() => {
+          el.classList.remove('animate__animated',inAnimation);
+        }, 500);
+      }, 500);
+    }
   }
 
   private getUserGeolocation(){
