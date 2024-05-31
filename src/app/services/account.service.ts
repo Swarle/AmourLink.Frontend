@@ -14,9 +14,8 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource: BehaviorSubject<User | null>;
   currentUser$: Observable<User | null>;
-  token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6W10sImp0aSI6ImIyZTFmNWIyLTZmMzQtNDMwOC1hN2I3' +
-    'LTg3NzE3OWY3YWVjOCIsInN1YiI6ImFkbWluQG1haWwuY29tIiwiaWF0IjoxNzE1N' +
-    'zYyMTgyLCJleHAiOjE3MTU3NjM5ODJ9.ngpU1xTDRIu1WJJfhS9W4nec_gF9rXZi8tEEIBUvJuI';
+  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3YTJiZmExNS05MTcxLTRkYjktO' +
+    'DA4ZC1jMGQwNmUyNTc1NTkiLCJuYW1lIjoiQ2FuZGllIEdyZWd1b2wiLCJpYXQiOjE1MTYyMzkwMjJ9.tUAeKHfwe8vADM230Mmj4dgVJHGtlakxsuKUISI57GA';
 
   constructor(private httpClient: HttpClient) {
     this.currentUserSource = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user')!));
