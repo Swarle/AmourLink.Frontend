@@ -15,9 +15,9 @@ import {MainPageComponent} from "../main-page/main-page.component";
 export class LoginComponent implements OnInit{
   parentComponent?: MainPageComponent;
   loginForm: FormGroup = new FormGroup({});
-  loginValidationErrors: Map<string, string> = new Map([
+  emailValidationErrors: Map<string, string> = new Map([
     ["required", "Імейл обов'язковий"],
-    ["email", "Некоректний Імейл"]
+    ['email', "Некоректний імейл"]
   ]);
   passwordValidationErrors: Map<string, string>  = new Map([
     ["required", "Пароль обов'язковий"],
@@ -56,17 +56,15 @@ export class LoginComponent implements OnInit{
 
   private initializeForm(){
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4), Validators.pattern(passwordRegex)]]
     });
   }
 
   onSubmit(){
-    this.accountService.loginWithUserInfo(this.loginForm.value).subscribe({
-      next: () => {
-        //TODO: There are will be redirect to the main page
-      }
-    })
+    //TODO: Change when will be security service
+    this.accountService.loginWithUserInfo(this.loginForm.value);
+
   }
 
 }
