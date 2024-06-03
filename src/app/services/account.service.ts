@@ -50,7 +50,9 @@ export class AccountService {
       id: tokenObj.jti,
       email: tokenObj.sub,
       roles: tokenObj.roles,
-      token: token
+      token: token,
+      mainPhoto: tokenObj.mainPhoto,
+      name: tokenObj.name
     };
 
     localStorage.setItem('user', JSON.stringify(user));
