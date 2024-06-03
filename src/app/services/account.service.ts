@@ -14,10 +14,9 @@ export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource: BehaviorSubject<User | undefined>;
   currentUser$: Observable<User | undefined>;
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YTJiZmExNS05MTcxLT' +
-    'RkYjktODA4ZC1jMGQwNmUyNTc1NTkiLCJzdWIiOiJ2dmFzaWx0c292YUBjb21zZW56LmNvbSIsInJvbGVzIjpbIl' +
-    'VzZXIiXSwibWFpblBob3RvIjoiaHR0cHM6Ly9yYW5kb211c2VyLm1lL2FwaS9wb3J0cmFpdHMvbWVuLzI1LmpwZyI' +
-    'sIm5hbWUiOiJDYW5kaWUgR3JlZ291bCIsImlhdCI6MTUxNjIzOTAyMn0.CNuegsSaJ82pdJaMPheVP42vwTSWogNQVbdS7RySef8';
+  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YTJiZmExNS05MTcxLTRkYjktODA4ZC1jMGQwNmUyNTc1NTkiLCJzdWIiOi' +
+    'J2dmFzaWx0c292YUBjb21zZW56LmNvbSIsInJvbGVzIjpbIlVzZXIiXSwibWFpblBob3RvIjoiaHR0cHM6Ly9yYW5kb211c2VyLm1lL2FwaS9wb3J0cmFpdHMvbWVuLzI1LmpwZyIsIm5hbWUiOiJDYW5' +
+    'kaWUgR3JlZ291bCIsImlhdCI6MTUxNjIzOTAyMn0.CxMSIAqgbViRt1BNFjCxBHpLcDoV33FnGKwDfQkekXc';
 
   constructor(private httpClient: HttpClient) {
     this.currentUserSource = new BehaviorSubject<User | undefined>(JSON.parse(localStorage.getItem('user')!));
