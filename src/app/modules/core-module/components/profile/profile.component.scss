@@ -1,0 +1,26 @@
+.profile{
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    &-text{
+      font-size: 20px;
+      font-weight: 800;
+    }
+  }
+  &__main{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  &__photo{
+    img{
+      border-radius: 100%;
+      border: solid 3px #C6C6C6;
+    }
+  }
+  &__name{
+    font-size: 24px;
+    font-weight: 800;
+  }
+}

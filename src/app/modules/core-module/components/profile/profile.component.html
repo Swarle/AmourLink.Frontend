@@ -1,0 +1,18 @@
+<section class="profile" *ngIf="user">
+  <div class="profile__header">
+    <div class="profile__header-text">
+      Профіль
+    </div>
+    <div class="profile__icon-edit">
+      <img src="assets/icons/profile/user-edit.svg" alt="">
+    </div>
+  </div>
+  <div class="profile__main">
+    <div class="profile__photo">
+      <img src="{{user.mainPhoto}}" alt="">
+    </div>
+    <div class="profile__name">
+      {{user.name}}
+    </div>
+  </div>
+</section>

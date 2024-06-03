@@ -90,13 +90,13 @@
               </div>
             </div>
           </div>
-          <div class="recommendation__info-wrapper" *ngIf="member.interests">
+          <div class="recommendation__info-wrapper" *ngIf="member.tags">
             <div class="recommendation__interests">
               <div class="recommendation__font-subtitle">
                 Інтереси
               </div>
               <div class="recommendation__bouble">
-                <div class="recommendation__bouble-item" *ngFor="let interest of member.interests">
+                <div class="recommendation__bouble-item" *ngFor="let interest of member.tags">
                   <div class="recommendation__font">
                     #{{interest}}
                   </div>

@@ -4,7 +4,7 @@ import {Info} from "./info";
 import {Question} from "./question";
 
 export interface Member{
-  Id: string;
+  id: string;
   firstName: string;
   lastName?: string;
   age: number;
@@ -22,5 +22,6 @@ export interface Member{
   degree?: Degree;
   infos?: Info[];
   questions?: Question[];
-  interests?: string[];
+  languages?: string[];
+  tags?: string[];
 }

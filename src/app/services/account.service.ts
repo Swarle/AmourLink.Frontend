@@ -12,13 +12,14 @@ import {Token} from "../models/apiInfrastructure/token";
 })
 export class AccountService {
   baseUrl = environment.apiUrl;
-  private currentUserSource: BehaviorSubject<User | null>;
-  currentUser$: Observable<User | null>;
-  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI3YTJiZmExNS05MTcxLTRkYjktO' +
-    'DA4ZC1jMGQwNmUyNTc1NTkiLCJuYW1lIjoiQ2FuZGllIEdyZWd1b2wiLCJpYXQiOjE1MTYyMzkwMjJ9.tUAeKHfwe8vADM230Mmj4dgVJHGtlakxsuKUISI57GA';
+  private currentUserSource: BehaviorSubject<User | undefined>;
+  currentUser$: Observable<User | undefined>;
+  token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YTJiZmExNS05MTcxLTRkYjktODA4ZC1jMGQwNmUyNTc1NTkiLCJzdWIiOi' +
+    'J2dmFzaWx0c292YUBjb21zZW56LmNvbSIsInJvbGVzIjpbIlVzZXIiXSwibWFpblBob3RvIjoiaHR0cHM6Ly9yYW5kb211c2VyLm1lL2FwaS9wb3J0cmFpdHMvbWVuLzI1LmpwZyIsIm5hbWUiOiJDYW5' +
+    'kaWUgR3JlZ291bCIsImlhdCI6MTUxNjIzOTAyMn0.CxMSIAqgbViRt1BNFjCxBHpLcDoV33FnGKwDfQkekXc';
 
   constructor(private httpClient: HttpClient) {
-    this.currentUserSource = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('user')!));
+    this.currentUserSource = new BehaviorSubject<User | undefined>(JSON.parse(localStorage.getItem('user')!));
     this.currentUser$ = this.currentUserSource.asObservable();
   }
 
@@ -48,7 +49,9 @@ export class AccountService {
       id: tokenObj.jti,
       email: tokenObj.sub,
       roles: tokenObj.roles,
-      token: token
+      token: token,
+      mainPhoto: tokenObj.mainPhoto,
+      name: tokenObj.name
     };
 
     localStorage.setItem('user', JSON.stringify(user));

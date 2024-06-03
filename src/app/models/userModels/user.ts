@@ -3,5 +3,6 @@ export interface User{
   token: string;
   email: string;
   roles: string[];
-
+  mainPhoto: string;
+  name: string;
 }
