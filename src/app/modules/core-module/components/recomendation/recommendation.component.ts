@@ -1,20 +1,22 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Member} from "../../../../models/userModels/member";
 import {RecommendationService} from "../../services/recommendation.service";
 import {HttpErrorContent} from "../../../../models/apiInfrastructure/httpErrorContent";
 import {MemberPagination} from "../../../../models/pagiantion/memberPagination";
+import {timeout} from "rxjs";
 
 @Component({
   selector: 'app-recomendation',
   templateUrl: './recommendation.component.html',
   styleUrls: ['./recommendation.component.scss']
 })
-export class RecommendationComponent implements OnInit{
+export class RecommendationComponent implements OnInit, OnDestroy{
   title = 'Знайомства';
   member?: Member;
   geolocation?: GeolocationCoordinates;
   pagination?: MemberPagination;
   pageNumber = 1;
+  watchId?: number;
 
   constructor(private recommendationService: RecommendationService) {
   }
@@ -22,12 +24,18 @@ export class RecommendationComponent implements OnInit{
   ngOnInit(): void {
     this.getUserGeolocation();
 
-    this.loadMember()
+    this.loadMember();
+  }
+  ngOnDestroy(){
+    if(this.watchId !== undefined)
+      navigator.geolocation.clearWatch(this.watchId);
   }
 
   loadMember(){
     this.recommendationService.getMember(this.pageNumber).subscribe({
       next: response => {
+        console.log(response);
+        console.log(this.geolocation)
         this.member = response.result;
         this.pagination = response.pagination;
         this.pageNumber++;
@@ -66,13 +74,14 @@ export class RecommendationComponent implements OnInit{
   }
 
   private getUserGeolocation(){
-    navigator.geolocation.watchPosition(
+    this.watchId = navigator.geolocation.watchPosition(
       (pos) => {
         this.geolocation = pos.coords;
+        console.log(pos.coords);
       },
       (error) => {
         this.geolocation = undefined;
-      }
+      }, {timeout: 2}
     )
   }
 
