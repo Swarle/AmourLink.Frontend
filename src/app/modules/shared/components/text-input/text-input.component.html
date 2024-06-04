@@ -2,7 +2,8 @@
   [class.is-invalid]="control.invalid && control.touched"
   [formControl]="control"
   placeholder="{{placeholder}}"
-  type="{{type}}">
+  type="{{type}}"
+  [class]="classList">
 
 <ng-container *ngIf="errorMap.size > 0">
   <ng-container *ngFor="let error of errorMap | keyvalue">

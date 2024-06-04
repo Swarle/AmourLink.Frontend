@@ -17,7 +17,7 @@ export interface Member{
     latitude: number,
     longitude: number
   }
-  hobbie: string;
+  hobbies: string[];
   pictures: Picture[];
   degree?: Degree;
   infos?: Info[];

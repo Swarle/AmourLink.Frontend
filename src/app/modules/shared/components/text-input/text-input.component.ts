@@ -10,6 +10,7 @@ export class TextInputComponent implements ControlValueAccessor{
   @Input() placeholder = ''
   @Input() type = 'text';
   @Input() errorMap: Map<string, string> = new Map();
+  @Input() classList: string = '';
 
   constructor(@Self() public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;
