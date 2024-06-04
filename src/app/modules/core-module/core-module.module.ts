@@ -8,6 +8,12 @@ import {ErrorInterceptor} from "../../interceptors/error.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {JwtInterceptor} from "../../interceptors/jwt.interceptor";
 import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import {ModalModule} from "ngx-bootstrap/modal";
+import {AppModule} from "../../app.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {TextInputComponent} from "../shared/components/text-input/text-input.component";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -15,11 +21,15 @@ import { ProfileComponent } from './components/profile/profile.component';
     NavComponent,
     RecommendationComponent,
     ProfileComponent,
+    ProfileEditComponent,
   ],
   imports: [
     CommonModule,
     CoreModuleRoutingModule,
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    ModalModule.forRoot(),
+    SharedModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

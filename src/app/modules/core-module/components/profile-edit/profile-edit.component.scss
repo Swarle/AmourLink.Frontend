@@ -1,0 +1,96 @@
+.modal{
+  &__basic{
+    &-input{
+      display: block;
+      height: 50px;
+      width: 350px;
+      border: 1px solid black;
+      border-radius: 20px;
+      padding: 12px 20px;
+    }
+    &-submit{
+      margin-top: 20px;
+      width: 350px;
+      height: 50px;
+    }
+    &-select{
+      display: block;
+      width: 350px;
+      border-radius: 20px;
+      padding: 12px 20px;
+    }
+  &-form{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      label{
+        font-size: 18px;
+        margin-left: 5px;
+        margin-bottom: 4px;
+      }
+    }
+  }
+}
+
+.profile-edit{
+  width: 700px;
+  margin: auto;
+  &__arrow{
+    cursor: pointer;
+  }
+  &__header{
+    background-color: #ffffff;
+    position: relative;
+    display: flex;
+    height: 70px;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 22px;
+    &:after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: 1px;
+      width: 699px;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    &-show{
+      margin-top: 8px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+  &__wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min-content, max-content));
+    grid-gap: 10px;
+    :first-child{
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+  &__item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 20px;
+  }
+  &__basic{
+    cursor: pointer;
+  }
+  &__font{
+    font-weight: 800;
+    &-fz22{
+      font-size: 22px;
+    }
+    &-fz18{
+      font-size: 18px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}

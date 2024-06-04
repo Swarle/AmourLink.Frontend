@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit{
 
   loginWithFacebook(){
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.parentComponent?.bsLoginModalRef?.hide();
   }
 
   openRegisterModal(){

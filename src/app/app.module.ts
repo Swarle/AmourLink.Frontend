@@ -16,17 +16,17 @@ import {
 } from "@abacritt/angularx-social-login";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { RegisterComponent } from './components/register/register.component';
-import { TextInputComponent } from './components/text-input/text-input.component';
+import { TextInputComponent } from './modules/shared/components/text-input/text-input.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import {ErrorInterceptor} from "./interceptors/error.interceptor";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import {SharedModule} from "./modules/shared/shared.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    TextInputComponent,
     MainPageComponent
   ],
   imports: [
@@ -37,7 +37,8 @@ import {JwtInterceptor} from "./interceptors/jwt.interceptor";
     ReactiveFormsModule,
     SocialLoginModule,
     GoogleSigninButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [
     {
