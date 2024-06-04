@@ -1,6 +1,6 @@
 <section class="profile-edit" *ngIf="profile">
   <div class="profile-edit__header">
-    <div class="profile-edit__header-return profile-edit__arrow">
+    <div (click)="bsModalRef.hide()" class="profile-edit__header-return profile-edit__arrow">
       <img src="assets/icons/profile/Arrow-left.png" alt="">
     </div>
     <div class="profile-edit__header-show">

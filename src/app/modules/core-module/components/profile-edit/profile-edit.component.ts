@@ -16,7 +16,8 @@ export class ProfileEditComponent implements OnInit{
     ["required", "Імейл обов'язковий"]
   ]);
 
-  constructor(private modalService: BsModalService,private formBuilder: FormBuilder) {
+  constructor(private modalService: BsModalService,private formBuilder: FormBuilder,
+              public bsModalRef: BsModalRef) {
     this.profile = {
       firstName: "Oleg",
       lastName: 'Petrov',
