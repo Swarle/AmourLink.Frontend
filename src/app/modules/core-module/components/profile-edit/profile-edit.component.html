@@ -9,7 +9,29 @@
   </div>
   <div class="profile-edit__wrapper">
     <div class="profile-edit__item">
-
+      <div class="profile-edit__pictures" cdkDropListGroup>
+        <ng-container *ngFor="let picture of profile.pictures; let i = index">
+          <div class="profile-edit__picture-drag"
+               cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="drop($event)"
+               [cdkDropListData]="{item:picture,index:i}">
+            <div class="profile-edit__picture profile-edit__picture-alive" cdkDrag>
+              <div class="profile-edit__picture-placeholder" *cdkDragPlaceholder></div>
+                <img class="profile-edit__picture-user" src="{{picture.pictureUrl}}" alt="" >
+                <div (click)="removePicture(picture.id)" class="profile-edit__picture-cross">
+                  <img src="assets/icons/profile/Cross.svg" alt="">
+                </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="profile.pictures.length < 6">
+          <div class="profile-edit__picture" *ngFor="let i of getRemainingPhotosCount">
+            <div class="profile-edit__picture-plus" (click)="fileInput.click()">
+              <img src="assets/icons/profile/Plus.svg" alt="">
+              <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" style="display: none;">
+            </div>
+          </div>
+        </ng-container>
+      </div>
     </div>
     <div (click)="openBasicInfoModal(basicInfoModal)" class="profile-edit__item profile-edit__basic">
       <div class="profile-edit__item-left">

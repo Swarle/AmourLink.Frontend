@@ -9,6 +9,13 @@
   }
 }
 
+.modal-backdrop{
+  z-index: 0;
+}
+.modal{
+  z-index: 0;
+}
+
 .profile{
   &__header{
     display: flex;

@@ -14,6 +14,7 @@ import {AppModule} from "../../app.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {TextInputComponent} from "../shared/components/text-input/text-input.component";
 import {SharedModule} from "../shared/shared.module";
+import {CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup} from "@angular/cdk/drag-drop";
 
 
 @NgModule({
@@ -30,6 +31,10 @@ import {SharedModule} from "../shared/shared.module";
     ModalModule.forRoot(),
     SharedModule,
     ReactiveFormsModule,
+    CdkDropList,
+    CdkDrag,
+    CdkDropListGroup,
+    CdkDragPlaceholder,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
