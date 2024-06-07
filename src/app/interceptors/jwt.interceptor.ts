@@ -17,11 +17,13 @@ export class JwtInterceptor implements HttpInterceptor {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if(user){
-          request = request.clone({
-            setHeaders: {
-              Authorization: `Bearer ${user.token}`
-            }
-          });
+          if(!request.url.includes('security-service/login')){
+            request = request.clone({
+              setHeaders: {
+                Authorization: `Bearer ${user.token}`
+              }
+            });
+          }
         }
       }
     });

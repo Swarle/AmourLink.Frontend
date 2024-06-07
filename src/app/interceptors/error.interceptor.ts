@@ -22,6 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
+        console.log(err);
         switch (err.status){
           case 401:
             //TODO: Delete jwt token when account service will be ready
