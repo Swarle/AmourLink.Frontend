@@ -5,6 +5,9 @@ import {AppComponent} from "../../app.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {passwordRegex} from "../../helpers/passwordRegex";
 import {MainPageComponent} from "../main-page/main-page.component";
+import {User} from "../../models/userModels/user";
+import {UserLogin} from "../../models/userModels/userLogin";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -27,7 +30,7 @@ export class LoginComponent implements OnInit{
 
 
   constructor(private authService: SocialAuthService, private accountService: AccountService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -36,7 +39,12 @@ export class LoginComponent implements OnInit{
     this.authService.authState.subscribe((user) => {
       if(user != null){
         if(user.provider == "GOOGLE")
-          this.accountService.verifyGoogleIdToken(user.idToken);
+          this.accountService.loginWithGoogle(user.idToken).subscribe({
+            next: () => {
+              this.router.navigateByUrl('/core');
+              this.parentComponent?.bsLoginModalRef?.hide();
+            }
+          });
         else if(user.provider == "FACEBOOK")
           this.accountService.loginWithFacebook(user.authToken);
 
@@ -64,7 +72,12 @@ export class LoginComponent implements OnInit{
 
   onSubmit(){
     //TODO: Change when will be security service
-    this.accountService.loginWithUserInfo(this.loginForm.value);
+    this.accountService.loginWithUserInfo(this.loginForm.value).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/core');
+        this.parentComponent?.bsLoginModalRef?.hide();
+      }
+    });
 
   }
 

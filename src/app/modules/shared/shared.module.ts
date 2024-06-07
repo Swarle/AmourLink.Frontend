@@ -2,19 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {TextInputComponent} from "./components/text-input/text-input.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {ToastrModule} from "ngx-toastr";
 
 
 
 @NgModule({
   declarations: [
-    TextInputComponent
+    TextInputComponent,
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      positionClass: "toast-top-right",
+    }),
   ],
   exports: [
-    TextInputComponent
+    TextInputComponent,
+    ToastrModule,
   ]
 })
 export class SharedModule { }

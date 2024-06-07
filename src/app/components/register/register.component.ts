@@ -5,6 +5,7 @@ import {AccountService} from "../../services/account.service";
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {passwordRegex} from "../../helpers/passwordRegex";
 import {MainPageComponent} from "../main-page/main-page.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -33,7 +34,7 @@ export class RegisterComponent implements OnInit{
 
 
   constructor(private authService: SocialAuthService, private accountService: AccountService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -42,7 +43,12 @@ export class RegisterComponent implements OnInit{
     this.authService.authState.subscribe((user) => {
       if(user != null){
         if(user.provider == "GOOGLE")
-          this.accountService.verifyGoogleIdToken(user.idToken);
+          this.accountService.loginWithGoogle(user.idToken).subscribe({
+            next: () => {
+              this.router.navigateByUrl('/core');
+              this.parentComponent?.bsLoginModalRef?.hide();
+            }
+          });
         else if(user.provider == "FACEBOOK")
           this.accountService.loginWithFacebook(user.authToken);
       }
