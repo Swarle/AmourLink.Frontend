@@ -11,10 +11,12 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import {ModalModule} from "ngx-bootstrap/modal";
 import {AppModule} from "../../app.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TextInputComponent} from "../shared/components/text-input/text-input.component";
 import {SharedModule} from "../shared/shared.module";
 import {CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup} from "@angular/cdk/drag-drop";
+import { ResizeTextareaComponent } from './components/utils/resize-textarea/resize-textarea.component';
+import {TextFieldModule} from "@angular/cdk/text-field";
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import {CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup} from "@angul
     RecommendationComponent,
     ProfileComponent,
     ProfileEditComponent,
+    ResizeTextareaComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,8 @@ import {CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup} from "@angul
     CdkDrag,
     CdkDropListGroup,
     CdkDragPlaceholder,
+    FormsModule,
+    TextFieldModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

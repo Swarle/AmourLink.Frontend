@@ -15,7 +15,7 @@ export class ProfileEditComponent implements OnInit{
   basicInfoModalRef?: BsModalRef;
   basicInfoFromGroup: FormGroup = new FormGroup({});
   basicInfoInputValidationMap: Map<string, string> = new Map([
-    ["required", "Імейл обов'язковий"]
+    ["required", "Ім'я обов'язкове"]
   ]);
   pictureFile?: File;
 
@@ -26,6 +26,7 @@ export class ProfileEditComponent implements OnInit{
       lastName: 'Petrov',
       age: 24,
       gender: 'Чоловік',
+      bio: 'Lorem',
       pictures: [{
         id: 'adfdfdas',
         pictureUrl: 'https://randomuser.me/api/portraits/men/15.jpg',
@@ -71,6 +72,7 @@ export class ProfileEditComponent implements OnInit{
     this.basicInfoModalRef?.hide();
     //TODO: Send group info when route will be ready
   }
+
   get getRemainingPhotosCount(): number[]{
     if(this.profile.pictures.length < 6)
       return Array(6 - this.profile.pictures.length).fill(0);
@@ -111,5 +113,9 @@ export class ProfileEditComponent implements OnInit{
     });
 
     console.log(this.profile.pictures)
+  }
+
+  onBioSubmit(){
+    //TODO: Send request
   }
 }

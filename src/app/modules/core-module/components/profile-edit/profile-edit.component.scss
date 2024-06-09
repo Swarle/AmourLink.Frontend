@@ -43,14 +43,18 @@
 .profile-edit{
   width: 700px;
   margin: auto;
+  position: relative;
   &__arrow{
     cursor: pointer;
   }
   &__header{
+    position: fixed;
+    top: 0;
     background-color: #ffffff;
-    position: relative;
     display: flex;
     height: 70px;
+    width: 700px;
+    z-index: 10000000;
     justify-content: space-between;
     align-items: flex-start;
     padding: 12px 22px;
@@ -70,9 +74,11 @@
     }
   }
   &__wrapper{
+    margin-top: 70px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min-content, max-content));
     grid-gap: 10px;
+    padding-bottom: 100px;
     &:first-child{
       border-top-left-radius: 0;
       border-top-right-radius: 0;
@@ -85,11 +91,24 @@
     background-color: #ffffff;
     padding: 12px 22px;
     border-radius: 20px;
+    &__basic{
+      cursor: pointer;
+    }
+    &-textarea{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: normal;
+      gap: 10px;
+    }
+  }
+  &__textarea{
+    width: 100%;
+    height: fit-content;
+    position: relative;
   }
   &__pictures{
     display: flex;
-    //grid-template-columns: repeat(3, 211px);
-    //grid-template-rows: repeat(2, 236px);
     gap: 10px;
     flex-wrap: wrap;
     position: relative;
@@ -139,9 +158,6 @@
       bottom: -5px;
       right: -5px;
     }
-  }
-  &__basic{
-    cursor: pointer;
   }
   &__font{
     font-weight: 800;
