@@ -12,7 +12,7 @@
         <div class="profile-edit__pictures" cdkDropListGroup>
           <ng-container *ngFor="let picture of profile.pictures; let i = index">
             <div class="profile-edit__picture-drag"
-                 cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="drop($event)"
+                 cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="changePicturePosition($event)"
                  [cdkDropListData]="{item:picture,index:i}">
               <div class="profile-edit__picture profile-edit__picture-alive" cdkDrag>
                 <div class="profile-edit__picture-placeholder" *cdkDragPlaceholder></div>
@@ -33,7 +33,7 @@
           </ng-container>
         </div>
       </div>
-      <div (click)="openBasicInfoModal(basicInfoModal)" class="profile-edit__item profile-edit__item-basic">
+      <div (click)="openBasicInfoModal()" class="profile-edit__item profile-edit__item-basic">
         <div>
           <div class="profile-edit__font profile-edit__font-fz22">
             {{profile.firstName}} {{profile.lastName}}, {{profile.age}}
@@ -56,46 +56,3 @@
       </div>
     </div>
 </section>
-
-<ng-container>
-  <ng-template #basicInfoModal>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Основна інформація</h4>
-      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="basicInfoModalRef?.hide()">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="modal__basic">
-        <form (ngSubmit)="submitBasicInfoModal()" [formGroup]="basicInfoFromGroup" autocomplete="off" class="modal__basic-form">
-          <div>
-            <label class="profile-edit__font profile-edit__font-fz22">Ім'я</label>
-            <app-text-input
-              [formControl]="$any(basicInfoFromGroup.controls['firstName'])"
-              [placeholder]="'Ім\'я'"
-              [errorMap]="basicInfoInputValidationMap"
-              [classList]="'modal__basic-input'"></app-text-input>
-          </div>
-          <div>
-            <label class="profile-edit__font profile-edit__font-fz22">Фамілія</label>
-            <app-text-input
-              [formControl]="$any(basicInfoFromGroup.controls['lastName'])"
-              [placeholder]="'Фамілія'"
-              [errorMap]="basicInfoInputValidationMap"
-              [classList]="'modal__basic-input'"></app-text-input>
-          </div>
-          <div>
-            <label class="profile-edit__font profile-edit__font-fz22">Стать:</label>
-            <select class="form-select-lg modal__basic-select" formControlName="gender" name="gender">
-              <option [ngValue]="'Чоловік'">Чоловік</option>
-              <option [ngValue]="'Жінка'">Жінка</option>
-            </select>
-          </div>
-          <button type="submit" class="button button-gradient modal__basic-submit">
-            Зберегти інформацію
-          </button>
-        </form>
-      </div>
-    </div>
-  </ng-template>
-</ng-container>

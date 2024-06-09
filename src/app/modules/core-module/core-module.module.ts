@@ -17,6 +17,7 @@ import {SharedModule} from "../shared/shared.module";
 import {CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup} from "@angular/cdk/drag-drop";
 import { ResizeTextareaComponent } from './components/utils/resize-textarea/resize-textarea.component';
 import {TextFieldModule} from "@angular/cdk/text-field";
+import { BasicInfoModalComponent } from './components/profile-edit/modals/basic-info-modal/basic-info-modal.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {TextFieldModule} from "@angular/cdk/text-field";
     ProfileComponent,
     ProfileEditComponent,
     ResizeTextareaComponent,
+    BasicInfoModalComponent,
   ],
   imports: [
     CommonModule,

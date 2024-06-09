@@ -1,8 +1,9 @@
 import {Component, OnInit, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Picture} from "../../../../models/userModels/picture";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {BasicInfoModalComponent} from "./modals/basic-info-modal/basic-info-modal.component";
 
 @Component({
   selector: 'app-profile-edit',
@@ -10,13 +11,9 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
   styleUrls: ['./profile-edit.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProfileEditComponent implements OnInit{
+export class ProfileEditComponent{
   profile?: any;
-  basicInfoModalRef?: BsModalRef;
-  basicInfoFromGroup: FormGroup = new FormGroup({});
-  basicInfoInputValidationMap: Map<string, string> = new Map([
-    ["required", "Ім'я обов'язкове"]
-  ]);
+  basicInfoModalRef?: BsModalRef<BasicInfoModalComponent>;
   pictureFile?: File;
 
   constructor(private modalService: BsModalService,private formBuilder: FormBuilder,
@@ -52,25 +49,22 @@ export class ProfileEditComponent implements OnInit{
     }
   }
 
-  ngOnInit(): void {
-        this.initializeBasicInfoForm();
-  }
+  openBasicInfoModal(){
+    const initialState: ModalOptions = {
+      initialState: {
+        profile: this.profile
+      }
+    };
 
-  initializeBasicInfoForm(){
-    this.basicInfoFromGroup = this.formBuilder.group({
-      firstName: [this.profile.firstName, [Validators.required]],
-      lastName: [this.profile.lastName, Validators.required],
-      gender: [this.profile.gender, Validators.required]
+    this.basicInfoModalRef = this.modalService.show(BasicInfoModalComponent, initialState);
+    this.basicInfoModalRef?.content?.onSubmit.subscribe(result => {
+      this.submitBasicInfoModal(result);
     })
   }
 
-  openBasicInfoModal(template: TemplateRef<void>){
-    this.basicInfoModalRef = this.modalService.show(template);
-  }
-
-  submitBasicInfoModal(){
-    this.basicInfoModalRef?.hide();
-    //TODO: Send group info when route will be ready
+  submitBasicInfoModal(value: any){
+    console.log(value);
+    this.profile = this.basicInfoModalRef?.content?.profile;
   }
 
   get getRemainingPhotosCount(): number[]{
@@ -96,7 +90,7 @@ export class ProfileEditComponent implements OnInit{
     }
   }
 
-  drop(event: CdkDragDrop<any>) {
+  changePicturePosition(event: CdkDragDrop<any>) {
     //TODO: Send request that chandes position
     event.container.data.item.position = event.previousContainer.data.index;
     event.previousContainer.data.item.position = event.container.data.index;
