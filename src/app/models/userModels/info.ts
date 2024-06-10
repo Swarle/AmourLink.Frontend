@@ -1,7 +1,7 @@
 import {Answer} from "./answer";
 
 export interface Info{
-  titleId: string;
+  id: string;
   title: string;
-  answer: Answer;
+  answer?: Answer;
 }

@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {Subject} from "rxjs";
+import {BasicInfo} from "../../../../../../models/basicInfo";
 
 @Component({
   selector: 'app-basic-info-modal',
@@ -11,7 +12,7 @@ import {Subject} from "rxjs";
 })
 export class BasicInfoModalComponent implements OnInit{
   @Input() profile: any;
-  onSubmit = new Subject<any>();
+  onSubmit = new Subject<BasicInfo>();
   formGroup:  FormGroup = new FormGroup({});
   firstNameValidationMap: Map<string, string> = new Map([
     ["required", "Ім'я обов'язкове"],

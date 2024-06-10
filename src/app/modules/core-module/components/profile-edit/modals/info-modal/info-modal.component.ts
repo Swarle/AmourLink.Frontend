@@ -18,18 +18,18 @@ export class InfoModalComponent {
 
   constructor(public bsModalRef: BsModalRef) {
     this.infoWithAnswers = {
-      titleId: '1',
+      id: '1',
       title: 'Знак зодіаку',
       answers: [{
-        answerId: '1',
+        id: '1',
         answer: 'Стрілець',
       },
       {
-        answerId: '2',
+        id: '2',
         answer: 'Козеріг',
       },
       {
-        answerId: '3',
+        id: '3',
         answer: 'Ваги'
       }]
     } as InfoWithAnswers
@@ -37,7 +37,7 @@ export class InfoModalComponent {
 
   onItemClick(answerId: string){
     const newAnswer = this.infoWithAnswers?.answers
-      .find((answer: Answer) => answer.answerId === answerId);
+      .find((answer: Answer) => answer.id === answerId);
 
     if(newAnswer && this.info){
       this.info.answer = newAnswer;

@@ -7,9 +7,9 @@
   </div>
   <div class="modal-body">
     <div class="modal-items">
-      <div [class.modal-item-selected]="answer.answerId === info.answer.answerId"
+      <div [class.modal-item-selected]="answer.id === info.answer!.id"
            *ngFor="let answer of infoWithAnswers.answers"
-           (click)="onItemClick(answer.answerId)" class="modal-item">
+           (click)="onItemClick(answer.id)" class="modal-item">
         {{answer.answer}}
       </div>
     </div>

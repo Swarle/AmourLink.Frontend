@@ -1,7 +1,7 @@
 import {Answer} from "./answer";
 
 export interface InfoWithAnswers{
-  titleId: string;
+  id: string;
   title: string;
   answers: Answer[];
 }
