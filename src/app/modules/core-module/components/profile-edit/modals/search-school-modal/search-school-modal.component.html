@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Пошук навчального закладу</h4>
+  <button type="button" class="btn-close close" aria-label="Close" (click)="bsModalRef?.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+  <div class="modal-search-field">
+    <div class="fa fa-search"></div>
+    <input #searchField (input)="onInput($event)" type="text" placeholder="Назва навчального закладу англійською">
+  </div>
+</div>
+<div class="modal-body">
+  <div class="modal-items">
+    <ng-container *ngFor="let school of schoolList">
+      <div (click)="onItemClick($event)" class="modal-item">
+        {{school}}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!schoolList && searchField.value">
+      Навчальних закладів не знайдено
+    </ng-container>
+  </div>
+</div>
+

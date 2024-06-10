@@ -18,6 +18,8 @@ import {CdkDrag, CdkDragPlaceholder, CdkDropList, CdkDropListGroup} from "@angul
 import { ResizeTextareaComponent } from './components/utils/resize-textarea/resize-textarea.component';
 import {TextFieldModule} from "@angular/cdk/text-field";
 import { BasicInfoModalComponent } from './components/profile-edit/modals/basic-info-modal/basic-info-modal.component';
+import { SearchSchoolModalComponent } from './components/profile-edit/modals/search-school-modal/search-school-modal.component';
+import { InfoModalComponent } from './components/profile-edit/modals/info-modal/info-modal.component';
 
 
 @NgModule({
@@ -28,6 +30,8 @@ import { BasicInfoModalComponent } from './components/profile-edit/modals/basic-
     ProfileEditComponent,
     ResizeTextareaComponent,
     BasicInfoModalComponent,
+    SearchSchoolModalComponent,
+    InfoModalComponent,
   ],
   imports: [
     CommonModule,

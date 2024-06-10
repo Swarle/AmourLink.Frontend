@@ -10,6 +10,7 @@ export class ResizeTextareaComponent implements OnInit{
   @Input() text?: string;
   @Output() textChange = new EventEmitter<string>();
   @Output() buttonClick = new EventEmitter();
+  @Input() maxLength = 500;
   originalText?: string;
 
   ngOnInit(): void {
@@ -20,10 +21,9 @@ export class ResizeTextareaComponent implements OnInit{
   onInput(event: Event): void {
     if(this.text){
       const target = event.target as HTMLTextAreaElement;
-      const maxLength = 500;
-      if (this.text.length > maxLength) {
-        target.value = target.value.substring(0, maxLength);
-        this.text = this.text.substring(0, maxLength);
+      if (this.text.length > this.maxLength) {
+        target.value = target.value.substring(0, this.maxLength);
+        this.text = this.text.substring(0, this.maxLength);
       }
       this.textChange.emit(this.text);
     }

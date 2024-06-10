@@ -48,6 +48,19 @@
       border-top-right-radius: 0;
     }
   }
+  &__info{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    &-right{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+  }
   &__item{
     display: flex;
     justify-content: space-between;
@@ -55,6 +68,20 @@
     background-color: #ffffff;
     padding: 12px 22px;
     border-radius: 20px;
+    &-info{
+      flex-direction: column;
+      justify-content: normal;
+      align-items: flex-start;
+    }
+    &-list{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 15px;
+      width: 100%;
+      gap: 15px;
+      padding-left: 10px;
+    }
     &__basic{
       cursor: pointer;
     }
