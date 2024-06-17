@@ -1,0 +1,21 @@
+<ng-container *ngIf="infoWithAnswers && info">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{infoWithAnswers.title}}</h4>
+    <button type="button" class="btn-close close" aria-label="Close" (click)="bsModalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-items">
+      <div [class.modal-item-selected]="answer.id === info.answer!.id"
+           *ngFor="let answer of infoWithAnswers.answers"
+           (click)="onItemClick(answer.id)" class="modal-item">
+        {{answer.answer}}
+      </div>
+    </div>
+    <button [disabled]="!isListChanged"
+            [class.button-disabled]="!isListChanged"
+            (click)="onButtonClick()"
+            class="button button-gradient modal-button">Зберегти зміни</button>
+  </div>
+</ng-container>

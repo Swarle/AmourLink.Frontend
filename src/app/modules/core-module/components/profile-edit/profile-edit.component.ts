@@ -1,8 +1,16 @@
 import {Component, OnInit, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Picture} from "../../../../models/userModels/picture";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
+import {BasicInfoModalComponent} from "./modals/basic-info-modal/basic-info-modal.component";
+import {SearchSchoolModalComponent} from "./modals/search-school-modal/search-school-modal.component";
+import {Degree} from "../../../../models/userModels/degree";
+import {Info} from "../../../../models/userModels/info";
+import {InfoModalComponent} from "./modals/info-modal/info-modal.component";
+import {BasicInfo} from "../../../../models/basicInfo";
+import {ProfileEditService} from "../../services/profile-edit.service";
+import {PicturePositionChange} from "../../../../models/picturePositionChange";
 
 @Component({
   selector: 'app-profile-edit',
@@ -10,22 +18,22 @@ import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
   styleUrls: ['./profile-edit.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProfileEditComponent implements OnInit{
+export class ProfileEditComponent{
   profile?: any;
-  basicInfoModalRef?: BsModalRef;
-  basicInfoFromGroup: FormGroup = new FormGroup({});
-  basicInfoInputValidationMap: Map<string, string> = new Map([
-    ["required", "Імейл обов'язковий"]
-  ]);
-  pictureFile?: File;
+  infos?: any;
+  basicInfoModalRef?: BsModalRef<BasicInfoModalComponent>;
+  searchSchoolModalRef?: BsModalRef<SearchSchoolModalComponent>
+  infoModalRef?: BsModalRef<InfoModalComponent>
 
-  constructor(private modalService: BsModalService,private formBuilder: FormBuilder,
-              public bsModalRef: BsModalRef) {
+  constructor(private modalService: BsModalService, public bsModalRef: BsModalRef,
+              private profileEditService: ProfileEditService) {
     this.profile = {
       firstName: "Oleg",
       lastName: 'Petrov',
       age: 24,
       gender: 'Чоловік',
+      bio: 'Lorem',
+      occupation: 'Старший інженер',
       pictures: [{
         id: 'adfdfdas',
         pictureUrl: 'https://randomuser.me/api/portraits/men/15.jpg',
@@ -35,42 +43,134 @@ export class ProfileEditComponent implements OnInit{
         id: 'adfvbxczfas',
         pictureUrl: 'https://randomuser.me/api/portraits/men/13.jpg',
         position: 1
-      },
-      {
-        id: 'adfasdf',
-        pictureUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
-        position: 2
-      },
-      {
-        id: 'adfff',
-        pictureUrl: 'https://randomuser.me/api/portraits/men/4.jpg',
-        position: 3
       }
       ] as Picture[],
+      degree: {
+        schoolName: 'Харківський Національний Університет радіоелектроніки',
+        degreeType: 'Бакалавр',
+        startYear: new Date()
+      } as Degree,
+      infos: [{
+        id: '1',
+        title: 'Знак зодіаку',
+        answer: {
+          id: '1',
+          answer: 'Стрілець'
+        }
+      },
+      {
+        id: '2',
+        title: 'Тип Особистості',
+        answer: {
+          id: '2',
+          answer: 'ПРТА'
+        }
+      },
+      {
+        id: '3',
+        title: 'Стиль спілування',
+        answer: {
+          id: '3',
+          answer: 'Ліпше зустрітися'
+        }
+      }] as Info[]
 
+    };
+
+    this.infos = [{
+      id: '1',
+      title: 'Знак зодіаку',
+    },
+    {
+      id: '2',
+      title: 'Тип Особистості',
+    },
+    {
+      id: '3',
+      title: 'Стиль спілування',
+    },
+    {
+      id: '4',
+      title: 'Мова кохання'
+    }];
+  }
+
+  getInfoAnswerByTitleId(titleId: string): string | undefined{
+    const info = this.profile.infos.find((info: Info) => info.id === titleId);
+
+    if(info)
+      return info.answer.answer
+    else
+      return undefined
+  }
+
+  openInfoModal(id: string){
+    const info = this.profile.infos.find((info: Info) => info.id === id);
+
+    if(info){
+      const initialState: ModalOptions = {
+        initialState: {
+          info: JSON.parse(JSON.stringify(info))
+        }
+      }
+      this.infoModalRef = this.modalService.show(InfoModalComponent, initialState);
+      this.infoModalRef?.content?.buttonClick.subscribe(result => this.submitInfoModal(result))
     }
   }
 
-  ngOnInit(): void {
-        this.initializeBasicInfoForm();
-  }
+  submitInfoModal(info: Info){
+    this.profileEditService.updateInfo(info).subscribe({
+      next: _ => {
+        const index = this.profile.infos.findIndex((info: Info) => info.id === info.id);
 
-  initializeBasicInfoForm(){
-    this.basicInfoFromGroup = this.formBuilder.group({
-      firstName: [this.profile.firstName, [Validators.required]],
-      lastName: [this.profile.lastName, Validators.required],
-      gender: [this.profile.gender, Validators.required]
+        if(index !== -1){
+          this.profile.infos[index] = info;
+        }
+      }
     })
   }
 
-  openBasicInfoModal(template: TemplateRef<void>){
-    this.basicInfoModalRef = this.modalService.show(template);
+  submitOccupation(){
+    this.profileEditService.updateOccupation(this.profile.occupation).subscribe({});
   }
 
-  submitBasicInfoModal(){
-    this.basicInfoModalRef?.hide();
-    //TODO: Send group info when route will be ready
+  openSearchSchoolModal(){
+    this.searchSchoolModalRef = this.modalService.show(SearchSchoolModalComponent);
+    this.searchSchoolModalRef.content?.onSchoolSelect.subscribe(result => {
+      this.submitSchoolName(result);
+    })
   }
+
+  submitSchoolName(schoolName: string){
+    this.profileEditService.updateSchoolName(schoolName).subscribe({
+      next: _ => {
+        this.profile.degree.schoolName = schoolName;
+      }
+    })
+  }
+
+  openBasicInfoModal(){
+    const initialState: ModalOptions = {
+      initialState: {
+        profile: this.profile
+      }
+    };
+
+    this.basicInfoModalRef = this.modalService.show(BasicInfoModalComponent, initialState);
+    this.basicInfoModalRef?.content?.onSubmit.subscribe(result => {
+      this.submitBasicInfoModal(result);
+    })
+  }
+
+  submitBasicInfoModal(value: BasicInfo){
+    //TODO: Handle response
+    this.profileEditService.updateBasicInfo(value).subscribe({
+      next: response => {
+        this.profile = this.basicInfoModalRef?.content?.profile;
+      }
+    });
+  }
+
   get getRemainingPhotosCount(): number[]{
     if(this.profile.pictures.length < 6)
       return Array(6 - this.profile.pictures.length).fill(0);
@@ -78,38 +178,48 @@ export class ProfileEditComponent implements OnInit{
   }
 
   onFileSelected(event: any) {
-    //TODO: Send request when will be ready
     const file: File = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const newPicture: Picture = {
-          id: 'test',
-          pictureUrl: e.target.result,
-          position: this.profile.pictures.length
-        };
-        this.profile.pictures.push(newPicture);
-      };
-      reader.readAsDataURL(file);
-    }
+
+    this.profileEditService.addPicture(file).subscribe({
+      next: picture =>
+        this.profile.pictures.push(picture)
+    });
   }
 
-  drop(event: CdkDragDrop<any>) {
-    //TODO: Send request that chandes position
-    event.container.data.item.position = event.previousContainer.data.index;
-    event.previousContainer.data.item.position = event.container.data.index;
-    this.profile.pictures[event.previousContainer.data.index] = event.container.data.item;
-    this.profile.pictures[event.container.data.index] = event.previousContainer.data.item;
+  changePicturePosition(event: CdkDragDrop<any>) {
+    const picturePositionChange = {
+      firstPictureId: this.profile.pictures[event.previousContainer.data.index].id,
+      secondPictureId: this.profile.pictures[event.container.data.index].id,
+    } as PicturePositionChange
+
+    this.profileEditService.changePicturePosition(picturePositionChange).subscribe({
+      next: _ => {
+        event.container.data.item.position = event.previousContainer.data.index;
+        event.previousContainer.data.item.position = event.container.data.index;
+        this.profile.pictures[event.previousContainer.data.index] = event.container.data.item;
+        this.profile.pictures[event.container.data.index] = event.previousContainer.data.item;
+      }
+    });
   }
 
   removePicture(id: string){
-    //TODO: Send request
-    this.profile.pictures = this.profile.pictures.filter((picture: Picture) => picture.id !== id);
+    this.profileEditService.removePicture(id).subscribe({
+      next: _ => {
+        this.profile.pictures = this.profile.pictures.filter((picture: Picture) => picture.id !== id);
 
-    this.profile.pictures.forEach((picture: Picture, index: number) => {
-      picture.position = index;
+        this.profile.pictures.forEach((picture: Picture, index: number) => {
+          picture.position = index;
+        });
+      }
     });
+  }
 
-    console.log(this.profile.pictures)
+  submitBio(){
+    //TODO: Handle request
+    this.profileEditService.updateBio(this.profile.bio).subscribe({
+      next: _ => {
+
+      }
+    });
   }
 }

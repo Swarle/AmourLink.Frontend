@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import {Observable, take} from 'rxjs';
 import {AccountService} from "../services/account.service";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -17,7 +18,8 @@ export class JwtInterceptor implements HttpInterceptor {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if(user){
-          if(!request.url.includes('security-service/login')){
+          if(!request.url.includes('security-service/login') &&
+            request.url.includes(environment.apiUrl) && !request.url.includes('university')){
             request = request.clone({
               setHeaders: {
                 Authorization: `Bearer ${user.token}`

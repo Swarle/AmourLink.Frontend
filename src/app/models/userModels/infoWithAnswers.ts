@@ -1,7 +1,7 @@
 import {Answer} from "./answer";
 
-export interface Info{
+export interface InfoWithAnswers{
   id: string;
   title: string;
-  answer?: Answer;
+  answers: Answer[];
 }
