@@ -46,14 +46,20 @@ export class RecommendationComponent implements OnInit, OnDestroy{
     });
   }
 
-  like(){
-    //TODO: Implement request to swipe service
-    this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
+  like(receiverId: string){
+    this.recommendationService.like(receiverId).subscribe({
+      next: _ => {
+        this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
+      }
+    });
   }
 
-  dislike(){
-    //TODO: Implement request to swipe service
-    this.animateSwipe('.recommendation__card','swipe-left', 'animate__fadeIn');
+  dislike(receiverId: string){
+    this.recommendationService.dislike(receiverId).subscribe({
+      next: _ => {
+        this.animateSwipe('.recommendation__card','swipe-left', 'animate__fadeIn');
+      }
+    });
   }
 
   private animateSwipe(selector: string, outAnimation: string, inAnimation: string){

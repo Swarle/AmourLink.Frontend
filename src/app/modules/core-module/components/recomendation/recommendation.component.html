@@ -20,7 +20,7 @@
           <div class="recommendation__info-wrapper">
             <div class="recommendation__head">
               <div class="recommendation__head-header">
-                {{member.firstName}} {{member.lastName}} {{member.age}}
+                {{member.firstName}} {{member.lastName}} {{member.age}} {{member.id}}
               </div>
               <div class="recommendation__head-list">
                 <div class="recommendation__head-item">
@@ -109,12 +109,12 @@
       <div class="recommendation__buttons">
         <button class="recommendation__button">
         </button>
-        <button (click)="dislike()" class="recommendation__button recommendation__button-big recommendation__button-dislike">
+        <button (click)="dislike(member.id)" class="recommendation__button recommendation__button-big recommendation__button-dislike">
           <div>&#10005;</div>
         </button>
         <button class="recommendation__button">
         </button>
-        <button (click)="like()" class="recommendation__button recommendation__button-big recommendation__button-like">
+        <button (click)="like(member.id)" class="recommendation__button recommendation__button-big recommendation__button-like">
           <div class="fa fa-heart fa-2x"></div>
         </button>
         <button class="recommendation__button">
