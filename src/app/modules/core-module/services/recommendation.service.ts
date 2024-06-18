@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../../../environments/environment";
-import {HttpClient, HttpContext, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {getMemberPaginatedResult} from "./memberPaginationHelper";
+import {SessionService} from "./session.service";
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +11,15 @@ import {getMemberPaginatedResult} from "./memberPaginationHelper";
 export class RecommendationService {
   baseUrl = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private sessionService: SessionService) { }
 
   getMember(pageNumber: number = 1){
     let params = new HttpParams();
 
     params = params.append('pageNumber', pageNumber);
 
-    return getMemberPaginatedResult(this.baseUrl + '/recommendation-service/recommendation', params, this.httpClient);
+    return getMemberPaginatedResult(this.baseUrl + '/recommendation-service/recommendation',
+      params, this.httpClient, this.sessionService);
   }
 
   like(receiverId: string){

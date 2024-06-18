@@ -4,6 +4,8 @@ import {RecommendationService} from "../../services/recommendation.service";
 import {HttpErrorContent} from "../../../../models/apiInfrastructure/httpErrorContent";
 import {MemberPagination} from "../../../../models/pagiantion/memberPagination";
 import {timeout} from "rxjs";
+import {ApiResponse} from "../../../../models/apiInfrastructure/apiResponse";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-recomendation',
@@ -18,7 +20,8 @@ export class RecommendationComponent implements OnInit, OnDestroy{
   pageNumber = 1;
   watchId?: number;
 
-  constructor(private recommendationService: RecommendationService) {
+  constructor(private recommendationService: RecommendationService,
+              private toastrService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -50,7 +53,14 @@ export class RecommendationComponent implements OnInit, OnDestroy{
     this.recommendationService.like(receiverId).subscribe({
       next: _ => {
         this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
-      }
+      },
+      error: (error: HttpErrorContent<any>) => {
+        if(error.status == 409){
+          this.toastrService.error("Не вдалося надіслати лайк. Лайк цій людині вже існує")
+          this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
+        }
+      },
+
     });
   }
 
