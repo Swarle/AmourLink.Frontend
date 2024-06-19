@@ -5,8 +5,8 @@ import {AppComponent} from "../../app.component";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {passwordRegex} from "../../helpers/passwordRegex";
 import {MainPageComponent} from "../main-page/main-page.component";
-import {User} from "../../models/userModels/user";
-import {UserLogin} from "../../models/userModels/userLogin";
+import {User} from "../../models/user-models/user";
+import {UserLogin} from "../../models/user-models/userLogin";
 import {Router} from "@angular/router";
 
 

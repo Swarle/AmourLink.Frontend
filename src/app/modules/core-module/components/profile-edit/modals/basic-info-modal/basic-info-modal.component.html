@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h4 class="modal-title pull-left">Основна інформація</h4>
-  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="basicInfoModalRef?.hide()">
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="basicInfoModalRef.hide()">
     <span aria-hidden="true" class="visually-hidden">&times;</span>
   </button>
 </div>
@@ -8,41 +8,41 @@
   <div class="modal__basic">
     <form (ngSubmit)="submitBasicInfoModal()" [formGroup]="formGroup" autocomplete="off" class="modal__basic-form">
       <div>
-        <label class="profile-edit__font profile-edit__font-fz22">Ім'я</label>
+        <label class="label label__basic">Ім'я</label>
         <app-text-input
           [formControl]="$any(formGroup.controls['firstName'])"
           [placeholder]="'Ім\'я'"
-          [errorMap]="firstNameValidationMap"
-          [classList]="'modal__basic-input'"></app-text-input>
+          [errorMap]="BasicInfoValidationMessages.firstName"
+          [classList]="'input input__basic'"></app-text-input>
       </div>
       <div>
-        <label class="profile-edit__font profile-edit__font-fz22">Фамілія</label>
+        <label class="label label__basic">Фамілія</label>
         <app-text-input
           [formControl]="$any(formGroup.controls['lastName'])"
           [placeholder]="'Фамілія'"
-          [errorMap]="lastNameValidationMap"
-          [classList]="'modal__basic-input'"></app-text-input>
+          [errorMap]="BasicInfoValidationMessages.lastName"
+          [classList]="'input input__basic'"></app-text-input>
       </div>
       <div>
-        <label class="profile-edit__font profile-edit__font-fz22">Національність</label>
+        <label class="label label__basic">Національність</label>
         <app-text-input
           [formControl]="$any(formGroup.controls['nationality'])"
           [placeholder]="'Національність'"
-          [errorMap]="nationalityValidationMap"
-          [classList]="'modal__basic-input'"></app-text-input>
+          [errorMap]="BasicInfoValidationMessages.nationality"
+          [classList]="'input input__basic'"></app-text-input>
       </div>
       <div>
-        <label class="profile-edit__font profile-edit__font-fz22">Вік</label>
+        <label class="label label__basic">Вік</label>
         <app-text-input
           [formControl]="$any(formGroup.controls['age'])"
           [placeholder]="'Вік'"
-          [errorMap]="ageValidationMap"
+          [errorMap]="BasicInfoValidationMessages.age"
           [type]="'number'"
-          [classList]="'modal__basic-input'"></app-text-input>
+          [classList]="'input input__basic'"></app-text-input>
       </div>
       <div>
-        <label class="profile-edit__font profile-edit__font-fz22">Стать:</label>
-        <select class="form-select-lg modal__basic-select" formControlName="gender" name="gender">
+        <label class="label label__basic">Стать:</label>
+        <select class="input input__basic" formControlName="gender" name="gender">
           <option [ngValue]="'Чоловік'">Чоловік</option>
           <option [ngValue]="'Жінка'">Жінка</option>
         </select>

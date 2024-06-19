@@ -29,6 +29,29 @@
   }
 }
 
+.input{
+  display: block;
+  border: 1px solid black;
+  border-radius: 20px;
+  &__basic{
+    height: 50px;
+    width: 350px;
+    padding: 12px 20px;
+  }
+}
+
+.label{
+  font-size: 18px;
+  &__basic{
+    font-weight: 700;
+    margin-left: 5px;
+    margin-bottom: 4px;
+  }
+}
 
 
 
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

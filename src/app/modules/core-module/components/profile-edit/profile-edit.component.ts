@@ -1,12 +1,12 @@
 import {Component, OnInit, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Picture} from "../../../../models/userModels/picture";
+import {Picture} from "../../../../models/user-models/picture";
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {BasicInfoModalComponent} from "./modals/basic-info-modal/basic-info-modal.component";
 import {SearchSchoolModalComponent} from "./modals/search-school-modal/search-school-modal.component";
-import {Degree} from "../../../../models/userModels/degree";
-import {Info} from "../../../../models/userModels/info";
+import {Degree} from "../../../../models/user-models/degree";
+import {Info} from "../../../../models/user-models/info";
 import {InfoModalComponent} from "./modals/info-modal/info-modal.component";
 import {BasicInfo} from "../../../../models/basicInfo";
 import {ProfileEditService} from "../../services/profile-edit.service";

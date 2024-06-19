@@ -1,0 +1,39 @@
+.preference{
+  &__form{
+    padding: 0 40px 25px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 17px;
+    &-submit{
+      width: 280px;
+      height: 60px;
+    }
+  }
+  &__age{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    .input__basic{
+      width: 184px;
+    }
+  }
+  &__slider{
+    position: relative;
+    width: 350px;
+    label{
+      display: block;
+    }
+    mat-slider{
+      width: 100%;
+    }
+    &-value{
+      position: absolute;
+      font-size: 18px;
+      font-weight: 700;
+      top: 20px;
+      right: 0;
+    }
+  }
+}

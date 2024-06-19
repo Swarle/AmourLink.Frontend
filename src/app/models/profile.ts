@@ -1,6 +1,6 @@
-import {Picture} from "./userModels/picture";
-import {Degree} from "./userModels/degree";
-import {Info} from "./userModels/info";
+import {Picture} from "./user-models/picture";
+import {Degree} from "./user-models/degree";
+import {Info} from "./user-models/info";
 
 export interface Profile{
   firstName: string;

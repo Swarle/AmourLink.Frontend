@@ -3,7 +3,8 @@
     <div class="recommendation__title">
       {{title}}
     </div>
-    <div class="recommendation__preferences">
+    <div (click)="openPreferenceModal()" class="recommendation__preference">
+      <img src="./assets/icons/recommendationPage/preference_icon.svg" alt="">
     </div>
   </div>
   <div class="recommendation__wrapper">

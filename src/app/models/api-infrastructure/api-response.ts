@@ -1,4 +1,4 @@
-import {ResponseType} from "./responseType";
+import {ResponseType} from "./response-type";
 
 export interface ApiResponse<TEntity>{
   responseType: string;

@@ -1,4 +1,4 @@
-import {Member} from "./userModels/member";
+import {Member} from "./user-models/member";
 import {Interaction} from "./interaction";
 
 export interface Feed{

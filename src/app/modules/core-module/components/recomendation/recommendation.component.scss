@@ -49,6 +49,9 @@
     font-weight: bold;
     line-height: normal;
   }
+  &__preference{
+    cursor: pointer;
+  }
   &__buttons{
     z-index: 5;
     position: absolute;

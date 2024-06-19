@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
-import {ApiResponse} from "../../../models/apiInfrastructure/apiResponse";
+import {ApiResponse} from "../../../models/api-infrastructure/api-response";
 import {Profile} from "../../../models/profile";
 import {AccountService} from "../../../services/account.service";
 import {map, take} from "rxjs";
-import {User} from "../../../models/userModels/user";
+import {User} from "../../../models/user-models/user";
 import {BasicInfo} from "../../../models/basicInfo";
 import {PicturePositionChange} from "../../../models/picturePositionChange";
-import {Picture} from "../../../models/userModels/picture";
-import {Info} from "../../../models/userModels/info";
+import {Picture} from "../../../models/user-models/picture";
+import {Info} from "../../../models/user-models/info";
 import {H} from "@angular/cdk/keycodes";
-import {InfoWithAnswers} from "../../../models/userModels/infoWithAnswers";
+import {InfoWithAnswers} from "../../../models/user-models/infoWithAnswers";
 
 @Injectable({
   providedIn: 'root'

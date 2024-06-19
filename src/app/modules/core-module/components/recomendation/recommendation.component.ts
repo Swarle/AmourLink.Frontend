@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Member} from "../../../../models/userModels/member";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Member} from "../../../../models/user-models/member";
 import {RecommendationService} from "../../services/recommendation.service";
-import {HttpErrorContent} from "../../../../models/apiInfrastructure/httpErrorContent";
+import {HttpErrorContent} from "../../../../models/api-infrastructure/http-error-content";
 import {MemberPagination} from "../../../../models/pagiantion/memberPagination";
-import {timeout} from "rxjs";
-import {ApiResponse} from "../../../../models/apiInfrastructure/apiResponse";
 import {ToastrService} from "ngx-toastr";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {PreferenceModalComponent} from "./models/preference-modal/preference-modal.component";
 
 @Component({
   selector: 'app-recomendation',
@@ -15,13 +15,14 @@ import {ToastrService} from "ngx-toastr";
 export class RecommendationComponent implements OnInit, OnDestroy{
   title = 'Знайомства';
   member?: Member;
+  preferenceModalRef?: BsModalRef<PreferenceModalComponent>;
   geolocation?: GeolocationCoordinates;
   pagination?: MemberPagination;
   pageNumber = 1;
   watchId?: number;
 
   constructor(private recommendationService: RecommendationService,
-              private toastrService: ToastrService) {
+              private toastrService: ToastrService, private modalService: BsModalService) {
   }
 
   ngOnInit(): void {
@@ -29,6 +30,7 @@ export class RecommendationComponent implements OnInit, OnDestroy{
 
     this.loadMember();
   }
+
   ngOnDestroy(){
     if(this.watchId !== undefined)
       navigator.geolocation.clearWatch(this.watchId);
@@ -37,14 +39,22 @@ export class RecommendationComponent implements OnInit, OnDestroy{
   loadMember(){
     this.recommendationService.getMember(this.pageNumber).subscribe({
       next: response => {
-        console.log(response);
-        console.log(this.geolocation)
         this.member = response.result;
         this.pagination = response.pagination;
         this.pageNumber++;
       },
-      error: (err: HttpErrorContent<Member>) => {
+      error: (err: HttpErrorContent<any>) => {
         console.log(err);
+      }
+    });
+  }
+
+  openPreferenceModal(){
+    this.preferenceModalRef = this.modalService.show(PreferenceModalComponent);
+    this.preferenceModalRef.content?.onSubmitEvent.subscribe({
+      next: _ => {
+        this.pageNumber = 1;
+        this.loadMember();
       }
     });
   }
@@ -60,7 +70,6 @@ export class RecommendationComponent implements OnInit, OnDestroy{
           this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
         }
       },
-
     });
   }
 
@@ -107,7 +116,7 @@ export class RecommendationComponent implements OnInit, OnDestroy{
 
   calculateDistance(member: Member): number{
     if(this.geolocation && member.location){
-      const earthRadius = 6371; // Радіус Землі в кілометрах
+      const earthRadius = 6371;
       const userLatitude = this.geolocation.latitude;
       const memberLatitude = member.location.latitude;
       const userLongitude = this.geolocation.longitude;

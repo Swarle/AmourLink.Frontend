@@ -1,4 +1,4 @@
-import {Member} from "../userModels/member";
+import {Member} from "../user-models/member";
 
 export interface MemberPagination{
   currentPage: number;

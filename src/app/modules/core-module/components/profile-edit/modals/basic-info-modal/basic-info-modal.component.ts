@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {Subject} from "rxjs";
 import {BasicInfo} from "../../../../../../models/basicInfo";
+import {BasicInfoValidationMessages} from "../../../../validation-messages/basic-info-validation-messages";
 
 @Component({
   selector: 'app-basic-info-modal',
@@ -14,24 +15,6 @@ export class BasicInfoModalComponent implements OnInit{
   @Input() profile: any;
   onSubmit = new Subject<BasicInfo>();
   formGroup:  FormGroup = new FormGroup({});
-  firstNameValidationMap: Map<string, string> = new Map([
-    ["required", "Ім'я обов'язкове"],
-    ["maxlength", "Поле має бути не більше 45 символів"],
-    ["minlength", "Поле має містити мінімум 2 символи"]
-  ]);
-  lastNameValidationMap: Map<string, string> = new Map([
-    ["maxlength", "Поле має бути не більше 45 символів"],
-    ["minlength", "Поле має містити мінімум 2 символи"]
-  ]);
-  nationalityValidationMap: Map<string, string> = new Map([
-    ["maxlength", "Поле має бути не більше 45 символів"],
-    ["minlength", "Поле має містити мінімум 5 символи"]
-  ]);
-  ageValidationMap: Map<string, string> = new Map([
-    ["required", "Вік обов'язковий"],
-    ["max", "Вік має бути не більше 100-років"],
-    ["min", "Вік має бути більше 18"]
-  ]);
 
   constructor(private formBuilder: FormBuilder,
               public basicInfoModalRef: BsModalRef) {
@@ -48,7 +31,7 @@ export class BasicInfoModalComponent implements OnInit{
       nationality: [this.profile.nationality, [Validators.minLength(5), Validators.maxLength(45)]],
       age: [this.profile.age, [Validators.required, Validators.max(100), Validators.min(18)]],
       gender: [this.profile.gender, Validators.required]
-    })
+    });
   }
 
   submitBasicInfoModal(){
@@ -61,4 +44,6 @@ export class BasicInfoModalComponent implements OnInit{
       this.basicInfoModalRef.hide();
     }
   }
+
+  protected readonly BasicInfoValidationMessages = BasicInfoValidationMessages;
 }

@@ -10,8 +10,8 @@ import {
 } from '@angular/common/http';
 import {catchError, map, Observable, tap} from 'rxjs';
 import {Router} from "@angular/router";
-import {ApiResponse} from "../models/apiInfrastructure/apiResponse";
-import {HttpErrorContent} from "../models/apiInfrastructure/httpErrorContent";
+import {ApiResponse} from "../models/api-infrastructure/api-response";
+import {HttpErrorContent} from "../models/api-infrastructure/http-error-content";
 
 
 @Injectable()
@@ -21,6 +21,15 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
+      map((event  ) => {
+        if(event instanceof HttpResponse){
+          const apiResponse: ApiResponse<any> = event.body;
+          if(apiResponse && apiResponse.result !== undefined)
+            return event.clone({body: apiResponse.result})
+        }
+
+        return event;
+      }),
       catchError((err: HttpErrorResponse) => {
         console.log(err);
         switch (err.status){

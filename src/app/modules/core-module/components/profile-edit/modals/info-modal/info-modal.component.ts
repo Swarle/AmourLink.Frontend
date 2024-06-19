@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {Info} from "../../../../../../models/userModels/info";
+import {Info} from "../../../../../../models/user-models/info";
 import {BsModalRef} from "ngx-bootstrap/modal";
-import {InfoWithAnswers} from "../../../../../../models/userModels/infoWithAnswers";
-import {Answer} from "../../../../../../models/userModels/answer";
+import {InfoWithAnswers} from "../../../../../../models/user-models/infoWithAnswers";
+import {Answer} from "../../../../../../models/user-models/answer";
 import {Subject} from "rxjs";
 
 @Component({
