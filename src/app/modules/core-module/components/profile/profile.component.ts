@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {AccountService} from "../../../../services/account.service";
-import {User} from "../../../../models/userModels/user";
+import {User} from "../../../../models/user-models/user";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {ProfileEditComponent} from "../profile-edit/profile-edit.component";
 

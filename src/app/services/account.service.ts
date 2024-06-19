@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {UserLogin} from "../models/userModels/userLogin";
-import {UserRegister} from "../models/userModels/userRegister";
+import {UserLogin} from "../models/user-models/userLogin";
+import {UserRegister} from "../models/user-models/userRegister";
 import {BehaviorSubject, map, Observable, take} from "rxjs";
-import {User} from "../models/userModels/user";
-import {Token} from "../models/apiInfrastructure/token";
-import {ApiResponse} from "../models/apiInfrastructure/apiResponse";
+import {User} from "../models/user-models/user";
+import {Token} from "../models/api-infrastructure/token";
+import {ApiResponse} from "../models/api-infrastructure/api-response";
 
 @Injectable({
   providedIn: 'root'

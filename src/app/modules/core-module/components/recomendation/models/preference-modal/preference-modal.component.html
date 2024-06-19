@@ -1,0 +1,58 @@
+<ng-container *ngIf="preference">
+  <section class="preference">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Уподобання</h4>
+      <button type="button" class="btn-close close" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div  class="modal-body">
+      <form [formGroup]="formGroup"
+        (ngSubmit)="onSubmit()"
+        class="preference__form"
+        autocomplete="off">
+        <div>
+          <label class="label label__basic">Мене цікавлять</label>
+          <select class="input input__basic" formControlName="gender" name="gender">
+            <option [ngValue]="'Male'">Чоловіки</option>
+            <option [ngValue]="'Female'">Жінки</option>
+            <option [ngValue]="'All'">Усі</option>
+          </select>
+        </div>
+        <div class="preference__age">
+          <div>
+            <label class="label label__basic">Мінімальний вік</label>
+            <app-text-input
+              [formControl]="$any(formGroup.controls['minAge'])"
+              [errorMap]="PreferenceValidationMessages.age"
+              [classList]="'input input__basic'"
+              [type]="'number'">
+            </app-text-input>
+          </div>
+          <div>
+            <label class="label label__basic">Максимальний вік</label>
+            <app-text-input
+              [formControl]="$any(formGroup.controls['maxAge'])"
+              [errorMap]="PreferenceValidationMessages.age"
+              [type]="'number'"
+              [classList]="'input input__basic'">
+            </app-text-input>
+          </div>
+        </div>
+        <div class="preference__slider">
+          <label class="label label__basic">Відстань</label>
+          <mat-slider step="1" min="1" max="250">
+            <input formControlName="distanceRange" matSliderThumb>
+          </mat-slider>
+          <div class="preference__slider-value">
+            {{formGroup.controls['distanceRange'].value}}км
+          </div>
+        </div>
+        <button
+          [class.button-disabled]="formGroup.invalid || !formGroup.touched"
+          [disabled]="formGroup.invalid || !formGroup.touched"
+          class="button button-gradient preference__form-submit">Зберегти</button>
+      </form>
+    </div>
+  </section>
+</ng-container>

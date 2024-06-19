@@ -1,9 +1,8 @@
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {PaginatedMemberResult} from "../../../models/pagiantion/memberPagination";
-import {ApiResponse} from "../../../models/apiInfrastructure/apiResponse";
+import {ApiResponse} from "../../../models/api-infrastructure/api-response";
 import {map} from "rxjs";
 import {Feed} from "../../../models/feed";
-import {inject} from "@angular/core";
 import {SessionService} from "./session.service";
 
 export function getMemberPaginatedResult(url: string, params: HttpParams, httpClient: HttpClient, sessionService: SessionService){
@@ -14,13 +13,13 @@ export function getMemberPaginatedResult(url: string, params: HttpParams, httpCl
 
  const interaction = sessionService.getInteraction();
 
-  return httpClient.post<ApiResponse<Feed>>(url,interaction, {observe: 'response',params: params}).pipe(
+  return httpClient.post<Feed>(url,interaction, {observe: 'response',params: params}).pipe(
     map(response => {
       if(response.body){
-        paginatedResult.result = response.body.result?.member;
+        paginatedResult.result = response.body.member;
 
-        if(response.body.result?.interaction){
-          sessionService.setInteraction(response.body.result.interaction);
+        if(response.body.interaction){
+          sessionService.setInteraction(response.body.interaction);
         }
 
       }

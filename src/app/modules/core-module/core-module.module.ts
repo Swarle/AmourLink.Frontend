@@ -20,6 +20,8 @@ import {TextFieldModule} from "@angular/cdk/text-field";
 import { BasicInfoModalComponent } from './components/profile-edit/modals/basic-info-modal/basic-info-modal.component';
 import { SearchSchoolModalComponent } from './components/profile-edit/modals/search-school-modal/search-school-modal.component';
 import { InfoModalComponent } from './components/profile-edit/modals/info-modal/info-modal.component';
+import { PreferenceModalComponent } from './components/recomendation/models/preference-modal/preference-modal.component';
+import {MatSliderModule} from "@angular/material/slider";
 
 
 @NgModule({
@@ -32,6 +34,7 @@ import { InfoModalComponent } from './components/profile-edit/modals/info-modal/
     BasicInfoModalComponent,
     SearchSchoolModalComponent,
     InfoModalComponent,
+    PreferenceModalComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { InfoModalComponent } from './components/profile-edit/modals/info-modal/
     CdkDragPlaceholder,
     FormsModule,
     TextFieldModule,
+    MatSliderModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
