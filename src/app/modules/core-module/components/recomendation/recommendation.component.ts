@@ -14,6 +14,8 @@ import {PreferenceModalComponent} from "./models/preference-modal/preference-mod
 })
 export class RecommendationComponent implements OnInit, OnDestroy{
   title = 'Знайомства';
+  showLoadPage = true;
+  isRequestSuccess = true;
   member?: Member;
   preferenceModalRef?: BsModalRef<PreferenceModalComponent>;
   geolocation?: GeolocationCoordinates;
@@ -37,14 +39,18 @@ export class RecommendationComponent implements OnInit, OnDestroy{
   }
 
   loadMember(){
+    this.showLoadPage = true;
     this.recommendationService.getMember(this.pageNumber).subscribe({
       next: response => {
         this.member = response.result;
         this.pagination = response.pagination;
         this.pageNumber++;
+        this.showLoadPage = false;
+        this.isRequestSuccess = true;
       },
       error: (err: HttpErrorContent<any>) => {
-        console.log(err);
+        this.member = undefined;
+        this.isRequestSuccess = false;
       }
     });
   }

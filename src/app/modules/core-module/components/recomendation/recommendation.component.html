@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="recommendation__wrapper">
-    <div class="recommendation__card" *ngIf="geolocation && member">
+    <div class="recommendation__card" *ngIf="!showLoadPage && member && geolocation">
       <div class="recommendation__card-scroller">
         <div class="recommendation__carousel">
           <carousel [interval]="0" >
@@ -122,8 +122,23 @@
         </button>
       </div>
     </div>
-  </div>
-  <div class="recommendation__geolocation"  *ngIf="!geolocation">
-    geolocation undefined
+    <div class="recommendation__load" *ngIf="showLoadPage && geolocation">
+      <div class="recommendation__load-pulse">
+        <div class="recommendation__load-circle"></div>
+      </div>
+      <ng-container *ngIf="!isRequestSuccess;else loadElse">
+        <div class="recommendation__load-text">
+          Для вашого запиту не вдалось знайти користувачів, оновіть фільтр
+        </div>
+      </ng-container>
+      <ng-template #loadElse>
+        <div class="recommendation__load-text">
+          Пошук користувачів
+        </div>
+      </ng-template>
+    </div>
+      <div class="recommendation__geolocation" *ngIf="!geolocation">
+        Для того, щоб отримати список користувачів потірбно надати доступ до своєї геолокації
+      </div>
   </div>
 </section>
