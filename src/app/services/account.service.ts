@@ -23,10 +23,10 @@ export class AccountService {
 
   loginWithGoogle(tokenId: string){
     console.log(tokenId)
-    return this.httpClient.post<ApiResponse<string>>(this.baseUrl + '/security-service/login/google', tokenId).pipe(
-      map((response) => {
-        if(response.result){
-          this.setCurrentUser(response.result);
+    return this.httpClient.post<string>(this.baseUrl + '/security-service/login/google', tokenId).pipe(
+      map((token) => {
+        if(token){
+          this.setCurrentUser(token);
         }
       })
     );
@@ -38,10 +38,10 @@ export class AccountService {
   }
 
   loginWithUserInfo(user: UserLogin){
-    return this.httpClient.post<ApiResponse<string>>(this.baseUrl + '/security-service/login', user).pipe(
-      map((response) => {
-        if(response.result){
-          this.setCurrentUser(response.result);
+    return this.httpClient.post<string>(this.baseUrl + '/security-service/login', user).pipe(
+      map((token) => {
+        if(token){
+          this.setCurrentUser(token);
         }
       })
     );

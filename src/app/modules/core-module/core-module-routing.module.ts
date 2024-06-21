@@ -4,6 +4,7 @@ import {RecommendationComponent} from "./components/recomendation/recommendation
 import {NavComponent} from "./components/nav/nav.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {ProfileEditComponent} from "./components/profile-edit/profile-edit.component";
+import {LikeListComponent} from "./components/like-list/like-list.component";
 
 const routes: Routes = [
   { path: '',
@@ -12,7 +13,8 @@ const routes: Routes = [
       { path: 'recommendation', component: RecommendationComponent, },
       { path: '',redirectTo: '/core/recommendation', pathMatch: 'full' },
       {path: 'profile', component: ProfileComponent},
-      {path: 'profile/edit', component: ProfileEditComponent}
+      {path: 'profile/edit', component: ProfileEditComponent},
+      {path: 'like-list', component: LikeListComponent}
     ]}
 ];
 

@@ -6,6 +6,7 @@ import {MemberPagination} from "../../../../models/pagiantion/memberPagination";
 import {ToastrService} from "ngx-toastr";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {PreferenceModalComponent} from "./models/preference-modal/preference-modal.component";
+import {SwipeService} from "../../services/swipe.service";
 
 @Component({
   selector: 'app-recomendation',
@@ -24,7 +25,9 @@ export class RecommendationComponent implements OnInit, OnDestroy{
   watchId?: number;
 
   constructor(private recommendationService: RecommendationService,
-              private toastrService: ToastrService, private modalService: BsModalService) {
+              private toastrService: ToastrService,
+              private modalService: BsModalService,
+              private swipeService: SwipeService) {
   }
 
   ngOnInit(): void {
@@ -66,7 +69,7 @@ export class RecommendationComponent implements OnInit, OnDestroy{
   }
 
   like(receiverId: string){
-    this.recommendationService.like(receiverId).subscribe({
+    this.swipeService.like(receiverId).subscribe({
       next: _ => {
         this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
       },
@@ -80,7 +83,7 @@ export class RecommendationComponent implements OnInit, OnDestroy{
   }
 
   dislike(receiverId: string){
-    this.recommendationService.dislike(receiverId).subscribe({
+    this.swipeService.dislike(receiverId).subscribe({
       next: _ => {
         this.animateSwipe('.recommendation__card','swipe-left', 'animate__fadeIn');
       }
