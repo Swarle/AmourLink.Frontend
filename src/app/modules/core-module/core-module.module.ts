@@ -22,6 +22,8 @@ import { SearchSchoolModalComponent } from './components/profile-edit/modals/sea
 import { InfoModalComponent } from './components/profile-edit/modals/info-modal/info-modal.component';
 import { PreferenceModalComponent } from './components/recomendation/models/preference-modal/preference-modal.component';
 import {MatSliderModule} from "@angular/material/slider";
+import { LikeListComponent } from './components/like-list/like-list.component';
+import { WrapLetterDirective } from './directives/wrap-letter.directive';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import {MatSliderModule} from "@angular/material/slider";
     SearchSchoolModalComponent,
     InfoModalComponent,
     PreferenceModalComponent,
+    LikeListComponent,
+    WrapLetterDirective,
   ],
   imports: [
     CommonModule,

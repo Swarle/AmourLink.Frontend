@@ -1,0 +1,110 @@
+.like-list{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  &__header{
+    margin-bottom: 22px;
+    &::after{
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 71px;
+      width: 100%;
+      height: 1px;
+      background-color: #111418;
+    }
+    &-text{
+      font-size: 20px;
+      height: 18px;
+      font-weight: bold;
+    }
+  }
+  &__content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+  }
+  &__card{
+    position: relative;
+    padding: 23px 0;
+    cursor: pointer;
+    display: flex;
+    width: 28.7%;
+    height: 76.6%;
+    transition: 0.5s;
+    &:hover{
+      transform: scale(1.1);
+    }
+    &-text{
+      display: flex;
+      flex-grow: 1;
+      font-weight: bold;
+      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
+      .like-list__card-letter{
+        line-height: 0.8;
+        vertical-align: center;
+        display: inline-block;
+      }
+    }
+    &-counter{
+      position: absolute;
+      bottom: -2px;
+      right: -4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      width: 50px;
+      background-color: #FFFFFF;
+      border-radius: 20px;
+    }
+    &-match{
+      border-radius: 20px;
+      border: solid 4px #ffe498;
+      background-color: #fff176;
+      .like-list__card-text{
+        font-size: 100px;
+        color: #FFDB76;
+        -webkit-text-stroke: 1px #FFC276;
+      }
+      .like-list__card-counter{
+        border: solid 4px #ffe498;
+      }
+    }
+    &-super{
+      border-radius: 20px;
+      border: solid 4px #9575cd;
+      background-color: #b39ddb;
+      .like-list__card-text{
+        font-size: 40px;
+        color: #53338E;
+        -webkit-text-stroke: 1px #39406B;
+      }
+      .like-list__card-counter{
+        border: solid 4px #9575cd;
+      }
+    }
+    &-like{
+      border-radius: 20px;
+      border: solid 4px #81c784;
+      background-color: #a5d6a7;
+      .like-list__card-text{
+        font-size: 110px;
+        color: #368B3B;
+        -webkit-text-stroke: 1px #38683C;
+        .like-list__card-letter{
+          line-height: 0.6;
+        }
+      }
+      .like-list__card-counter{
+        border: solid 4px #81c784;
+      }
+    }
+  }
+}
+

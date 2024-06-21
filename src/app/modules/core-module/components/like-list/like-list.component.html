@@ -1,0 +1,21 @@
+<section class="like-list" *ngIf="likesAndMatches">
+  <div class="like-list__header">
+    <div class="like-list__header-text">
+      Лайки та метчі
+    </div>
+  </div>
+  <div class="like-list__content">
+    <div class="like-list__card like-list__card-match">
+      <div class="like-list__card-text" appWrapLetter>Метчі</div>
+      <div class="like-list__card-counter">{{likesAndMatches.matchedUserIds.length}}</div>
+    </div>
+    <div class="like-list__card like-list__card-super">
+      <div class="like-list__card-text" appWrapLetter>Super-like</div>
+      <div class="like-list__card-counter">{{likesAndMatches.userSentSuperLike.length}}</div>
+    </div>
+    <div class="like-list__card like-list__card-like">
+      <div class="like-list__card-text" appWrapLetter>Лайк</div>
+      <div class="like-list__card-counter">{{likesAndMatches.userSentLike.length}}</div>
+    </div>
+  </div>
+</section>
