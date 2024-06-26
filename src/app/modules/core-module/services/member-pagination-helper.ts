@@ -16,7 +16,7 @@ export function getMemberPaginatedResult(url: string, params: HttpParams, httpCl
   return httpClient.post<Feed>(url,interaction, {observe: 'response',params: params}).pipe(
     map(response => {
       if(response.body){
-        paginatedResult.result = response.body.member;
+        paginatedResult.result = response.body.profile;
 
         if(response.body.interaction){
           sessionService.setInteraction(response.body.interaction);

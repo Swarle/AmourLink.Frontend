@@ -1,7 +1,7 @@
-import {Member} from "./user-models/member";
 import {Interaction} from "./interaction";
+import {Profile} from "./profile";
 
 export interface Feed{
-  member: Member;
+  profile: Profile;
   interaction?: Interaction;
 }

@@ -5,17 +5,30 @@
     </div>
   </div>
   <div class="like-list__content">
-    <div class="like-list__card like-list__card-match">
+    <div (click)="onCardClick('matches')" class="like-list__card like-list__card-match">
       <div class="like-list__card-text" appWrapLetter>Метчі</div>
       <div class="like-list__card-counter">{{likesAndMatches.matchedUserIds.length}}</div>
     </div>
-    <div class="like-list__card like-list__card-super">
+    <div (click)="onCardClick('super-likes')" class="like-list__card like-list__card-super">
       <div class="like-list__card-text" appWrapLetter>Super-like</div>
       <div class="like-list__card-counter">{{likesAndMatches.userSentSuperLike.length}}</div>
     </div>
-    <div class="like-list__card like-list__card-like">
+    <div (click)="onCardClick('likes')" class="like-list__card like-list__card-like">
       <div class="like-list__card-text" appWrapLetter>Лайк</div>
       <div class="like-list__card-counter">{{likesAndMatches.userSentLike.length}}</div>
     </div>
   </div>
 </section>
+
+<ng-template #likeModal>
+  <app-user-card
+    (onRightArrowClick)="currentCardType === 'matches' ? rightArrowClick() : null"
+    (onLeftArrowClick)="currentCardType === 'matches' ? leftArrowClick() : null"
+    [isShowControls]="currentCardType === 'matches'"
+    [isShowButtons]="!(currentCardType === 'matches')"
+    [isShowChatButton]="currentCardType === 'matches'"
+    (onChat)="currentCardType === 'matches' ? chat($event) : null"
+    (onDislike)="currentCardType !== 'matches' ? dislike($event) : null"
+    (onLike)="currentCardType !== 'matches' ? like($event) : null"
+    [profile]="profile"></app-user-card>
+</ng-template>

@@ -25,6 +25,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import { LikeListComponent } from './components/like-list/like-list.component';
 import { WrapLetterDirective } from './directives/wrap-letter.directive';
 import {MatInputModule} from "@angular/material/input";
+import { UserCardComponent } from './components/user-card/user-card.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import {MatInputModule} from "@angular/material/input";
     PreferenceModalComponent,
     LikeListComponent,
     WrapLetterDirective,
+    UserCardComponent,
   ],
     imports: [
         CommonModule,

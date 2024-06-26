@@ -26,7 +26,7 @@ export class ResizeTextareaComponent implements OnInit, AfterViewInit{
   originalText?: string;
   @ViewChild('autosize') autosize?: ElementRef;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone) {  }
 
   ngAfterViewInit(): void {
     this.adjustTextareaHeight();

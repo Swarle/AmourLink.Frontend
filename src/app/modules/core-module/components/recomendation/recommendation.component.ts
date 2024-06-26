@@ -1,5 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Member} from "../../../../models/user-models/member";
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {RecommendationService} from "../../services/recommendation.service";
 import {HttpErrorContent} from "../../../../models/api-infrastructure/http-error-content";
 import {MemberPagination} from "../../../../models/pagiantion/member-pagination";
@@ -7,17 +6,18 @@ import {ToastrService} from "ngx-toastr";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {PreferenceModalComponent} from "./models/preference-modal/preference-modal.component";
 import {SwipeService} from "../../services/swipe.service";
+import {Profile} from "../../../../models/profile";
 
 @Component({
   selector: 'app-recomendation',
   templateUrl: './recommendation.component.html',
-  styleUrls: ['./recommendation.component.scss']
+  styleUrls: ['./recommendation.component.scss'],
 })
 export class RecommendationComponent implements OnInit, OnDestroy{
   title = 'Знайомства';
   showLoadPage = true;
   isRequestSuccess = true;
-  member?: Member;
+  profile?: Profile;
   preferenceModalRef?: BsModalRef<PreferenceModalComponent>;
   geolocation?: GeolocationCoordinates;
   pagination?: MemberPagination;
@@ -45,14 +45,14 @@ export class RecommendationComponent implements OnInit, OnDestroy{
     this.showLoadPage = true;
     this.recommendationService.getMember(this.pageNumber).subscribe({
       next: response => {
-        this.member = response.result;
+        this.profile = response.result;
         this.pagination = response.pagination;
         this.pageNumber++;
         this.showLoadPage = false;
         this.isRequestSuccess = true;
       },
       error: (err: HttpErrorContent<any>) => {
-        this.member = undefined;
+        this.profile = undefined;
         this.isRequestSuccess = false;
       }
     });
@@ -71,12 +71,12 @@ export class RecommendationComponent implements OnInit, OnDestroy{
   like(receiverId: string){
     this.swipeService.like(receiverId).subscribe({
       next: _ => {
-        this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
+        this.loadMember();
       },
       error: (error: HttpErrorContent<any>) => {
         if(error.status == 409){
-          this.toastrService.error("Не вдалося надіслати лайк. Лайк цій людині вже існує")
-          this.animateSwipe('.recommendation__card', 'swipe-right', 'animate__fadeIn')
+          this.toastrService.error("Не вдалося надіслати лайк. Лайк цій людині вже існує");
+          this.loadMember();
         }
       },
     });
@@ -85,26 +85,9 @@ export class RecommendationComponent implements OnInit, OnDestroy{
   dislike(receiverId: string){
     this.swipeService.dislike(receiverId).subscribe({
       next: _ => {
-        this.animateSwipe('.recommendation__card','swipe-left', 'animate__fadeIn');
+        this.loadMember()
       }
     });
-  }
-
-  private animateSwipe(selector: string, outAnimation: string, inAnimation: string){
-    const el = document.querySelector(selector);
-    if(el){
-      el.classList.add(outAnimation);
-
-      setTimeout(() => {
-        this.loadMember();
-        el.classList.remove(outAnimation);
-        el.classList.add('animate__animated',inAnimation);
-
-        setTimeout(() => {
-          el.classList.remove('animate__animated',inAnimation);
-        }, 500);
-      }, 500);
-    }
   }
 
   private getUserGeolocation(){
@@ -119,27 +102,4 @@ export class RecommendationComponent implements OnInit, OnDestroy{
     )
   }
 
-  private toRadians(degrees: number): number {
-    return degrees * Math.PI / 180;
-  }
-
-  calculateDistance(member: Member): number{
-    if(this.geolocation && member.location){
-      const earthRadius = 6371;
-      const userLatitude = this.geolocation.latitude;
-      const memberLatitude = member.location.latitude;
-      const userLongitude = this.geolocation.longitude;
-      const memberLongitude = member.location.longitude;
-
-      const dLat = this.toRadians(memberLatitude - userLatitude);
-      const dLon = this.toRadians(memberLongitude - userLongitude);
-      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(this.toRadians(userLatitude)) * Math.cos(this.toRadians(memberLatitude)) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      return Math.floor(earthRadius * c);
-    }
-    else
-      return 0;
-  }
 }
