@@ -41,6 +41,17 @@ export class ProfileEditService {
       );
   }
 
+  getProfileById(userId: string){
+    return this.httpClient.get<Profile>(this.baseUrl + `/user-service/profile/${userId}`)
+      .pipe(
+        map(profile => {
+          profile.pictures = profile.pictures.sort((a, b) => a.position - b.position);
+
+          return profile;
+        })
+      );
+  }
+
   updateProfile(profile: Profile){
     return this.httpClient.put<Profile>(this.baseUrl + '/user-service/profile/update', profile);
   }

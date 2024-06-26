@@ -1,4 +1,4 @@
-import {Member} from "../user-models/member";
+import {Profile} from "../profile";
 
 export interface MemberPagination{
   currentPage: number;
@@ -7,6 +7,6 @@ export interface MemberPagination{
 }
 
 export class PaginatedMemberResult{
-  result?: Member;
+  result?: Profile;
   pagination?: MemberPagination;
 }

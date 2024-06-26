@@ -1,0 +1,139 @@
+<div class="user-card" *ngIf="profile">
+  <div class="user-card__scroller">
+    <div class="user-card__carousel">
+      <carousel [interval]="0" >
+        <slide *ngFor="let picture of profile.pictures">
+          <img src="{{picture.pictureUrl}}" alt="">
+        </slide>
+      </carousel>
+    </div>
+    <div class="user-card__info">
+      <div class="user-card__info-wrapper">
+        <div class="user-card__head">
+          <div class="user-card__head-header">
+            {{profile.firstname}} {{profile.lastname}}, {{profile.age}}
+          </div>
+          <div class="user-card__head-list">
+<!--            <div class="user-card__head-item">-->
+<!--              <img src="./assets/icons/recommendationPage/home.svg" alt="">-->
+<!--              <div class="user-card__head-item-text">Живе в місті Київ</div>-->
+<!--            </div>-->
+            <div *ngIf="geolocation" class="user-card__head-item">
+              <img src="./assets/icons/recommendationPage/map_marker.svg" alt="">
+              <div class="user-card__head-item-text">В діапазоні {{calculateDistance(profile)}} км</div>
+            </div>
+            <div class="user-card__head-item">
+              <img src="./assets/icons/recommendationPage/ruler.svg" alt="">
+              <div class="user-card__head-item-text">{{profile.height}} см</div>
+            </div>
+            <div class="user-card__head-item" *ngIf="profile.degree">
+              <img src="./assets/icons/recommendationPage/graduation_cap.svg" alt="">
+              <div class="user-card__head-item-text user-card__head-degree">
+                {{profile.degree.schoolName}} ({{profile.degree.degreeName}})
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--      <div class="user-card__info-wrapper">-->
+<!--        <div class="user-card__font-subtitle">-->
+<!--          Чого хоче {{profile.firstName}}?-->
+<!--        </div>-->
+<!--        <div class="user-card__want">-->
+<!--          <div class="user-card__want-icon">-->
+<!--            <img src="./assets/icons/recommendationPage/icon_comment.svg" alt="">-->
+<!--          </div>-->
+<!--          <div class="user-card__want-text">-->
+<!--            &lt;!&ndash;            TODO: Change this to variable &ndash;&gt;-->
+<!--            Просто спілкуватися-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="user-card__info-wrapper" *ngIf="profile.bio">
+        <div class="user-card__font-subtitle">
+          Про себе
+        </div>
+        <div class="user-card__bio-text user-card__font">
+          {{profile.bio}}
+        </div>
+      </div>
+<!--      <div class="user-card__info-wrapper" *ngIf="profile.info">-->
+<!--        <div class="user-card__font-subtitle">-->
+<!--          Головне-->
+<!--        </div>-->
+<!--        <div class="user-card__bubble">-->
+<!--          <div class="user-card__bubble-item" *ngFor="let info of profile.info">-->
+<!--            <div class="user-card__font">-->
+<!--              {{info.answers}}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="user-card__info-wrapper" *ngIf="profile.info">
+        <div class="user-card__questions">
+          <div class="user-card__question" *ngFor="let info of profile.info">
+            <div class="user-card__font-subtitle">
+              {{info.title}}
+            </div>
+            <div class="user-card__question-answer">
+              {{info.answers[0].answer}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="user-card__info-wrapper" *ngIf="profile.tags">
+        <div class="user-card__interests">
+          <div class="user-card__font-subtitle">
+            Інтереси
+          </div>
+          <div class="user-card__bubble">
+            <div class="user-card__bubble-item" *ngFor="let tag of profile.tags">
+              <div class="user-card__font">
+                #{{tag.tagName}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="user-card__info-wrapper" *ngIf="profile.hobbies">
+        <div class="user-card__interests">
+          <div class="user-card__font-subtitle">
+            Хоббі
+          </div>
+          <div class="user-card__bubble">
+            <div class="user-card__bubble-item" *ngFor="let hobby of profile.hobbies">
+              <div class="user-card__font">
+                {{hobby.hobbyName}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isShowButtons" class="user-card__buttons">
+    <button class="user-card__button">
+    </button>
+    <button (click)="onDislikeClick(profile.id)" class="user-card__button user-card__button--big user-card__button--dislike">
+      <div>&#10005;</div>
+    </button>
+    <button class="user-card__button">
+    </button>
+    <button (click)="onLikeClick(profile.id)" class="user-card__button user-card__button--big user-card__button--like">
+      <div class="fa fa-heart fa-2x"></div>
+    </button>
+    <button class="user-card__button">
+    </button>
+  </div>
+  <div *ngIf="!isShowButtons && isShowChatButton" class="user-card__buttons">
+    <button class="user-card__button user-card__button--chat">Створити чат</button>
+  </div>
+  <div class="user-card__controls" *ngIf="isShowControls">
+    <div (click)="onLeftArrowClick.emit()" class="user-card__control user-card__control--left">
+      <div class="fa fa-arrow-left"></div>
+    </div>
+    <div (click)="onRightArrowClick.emit()" class="user-card__control user-card__control--right">
+      <div class="fa fa-arrow-right"></div>
+    </div>
+  </div>
+</div>

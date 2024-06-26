@@ -75,7 +75,7 @@
     <div (click)="openSearchSchoolModal()" class="profile-edit__item">
       <div>
         <div class="profile-edit__font profile-edit__font-fz22">Освіта</div>
-        <div class="profile-edit__font profile-edit__font-fz18">{{profile.degree.schoolName}}</div>
+        <div class="profile-edit__font profile-edit__font-fz18">{{profile.degree !== undefined ? profile.degree!.schoolName : ''}}</div>
       </div>
       <div>
         <div class="profile-edit__arrow">
@@ -88,7 +88,7 @@
         Професія
       </div>
       <div class="profile-edit__textarea">
-        <app-resize-textarea (buttonClick)="updateProfile()" [maxLength]="45" [(text)]="profile.occupation"></app-resize-textarea>
+        <app-resize-textarea (buttonClick)="updateProfile()" [maxLength]="45" [(text)]="profile.occupation!"></app-resize-textarea>
       </div>
     </div>
 
