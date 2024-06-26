@@ -22,8 +22,16 @@ export class AccountService {
     this.currentUser$ = this.currentUserSource.asObservable();
   }
 
+  refreshAccessToken(refreshToken: string){
+    this.httpClient.post<LoginResponse>(this.baseUrl + '/security-service/login/refresh-token',
+      {refresh_token: refreshToken}).pipe(take(1)).subscribe({
+      next: response => {
+        this.setCurrentUser(response);
+      }
+    })
+  }
+
   loginWithGoogle(tokenId: string){
-    console.log(tokenId)
     return this.httpClient.post<LoginResponse>(this.baseUrl + '/security-service/login/google', tokenId).pipe(
       map((response) => {
         this.setCurrentUser(response);
@@ -32,8 +40,7 @@ export class AccountService {
   }
 
   loginWithFacebook(authToken: string){
-    //TODO:Make method when endpoint will be
-    return this.httpClient.post(this.baseUrl + 'security-service/account/login-with-facebook', authToken);
+    return this.httpClient.post(this.baseUrl + '/security-service/login/facebook', authToken);
   }
 
   loginWithUserInfo(user: UserLogin){
@@ -57,7 +64,7 @@ export class AccountService {
       roles: tokenObj.roles,
       token: loginResponse.access_token,
       accessTokenExpired: this.getTokenExpirationDate(tokenObj.exp),
-      refreshToken: loginResponse.access_token,
+      refreshToken: loginResponse.refresh_token,
       name: tokenObj.name
     };
 
