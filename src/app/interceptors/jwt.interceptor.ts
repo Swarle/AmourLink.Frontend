@@ -18,6 +18,9 @@ export class JwtInterceptor implements HttpInterceptor {
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         if(user){
+          if(new Date(user.accessTokenExpired).getTime() < new Date().getTime()){
+            this.accountService.refreshAccessToken(user.refreshToken);
+          }
           if(!request.url.includes('security-service/login') &&
             request.url.includes(environment.apiUrl) && !request.url.includes('university')){
             request = request.clone({
