@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Member} from "../../../../models/user-models/member";
 import {RecommendationService} from "../../services/recommendation.service";
 import {HttpErrorContent} from "../../../../models/api-infrastructure/http-error-content";
-import {MemberPagination} from "../../../../models/pagiantion/memberPagination";
+import {MemberPagination} from "../../../../models/pagiantion/member-pagination";
 import {ToastrService} from "ngx-toastr";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {PreferenceModalComponent} from "./models/preference-modal/preference-modal.component";

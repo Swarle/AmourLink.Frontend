@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {UserLogin} from "../models/user-models/userLogin";
-import {UserRegister} from "../models/user-models/userRegister";
+import {UserLogin} from "../models/user-models/user-login";
+import {UserRegister} from "../models/user-models/user-register";
 import {BehaviorSubject, map, Observable, take} from "rxjs";
 import {User} from "../models/user-models/user";
 import {Token} from "../models/api-infrastructure/token";
 import {ApiResponse} from "../models/api-infrastructure/api-response";
+import {LoginResponse} from "../models/login-response";
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,9 @@ export class AccountService {
 
   loginWithGoogle(tokenId: string){
     console.log(tokenId)
-    return this.httpClient.post<string>(this.baseUrl + '/security-service/login/google', tokenId).pipe(
-      map((token) => {
-        if(token){
-          this.setCurrentUser(token);
-        }
+    return this.httpClient.post<LoginResponse>(this.baseUrl + '/security-service/login/google', tokenId).pipe(
+      map((response) => {
+        this.setCurrentUser(response);
       })
     );
   }
@@ -38,11 +37,9 @@ export class AccountService {
   }
 
   loginWithUserInfo(user: UserLogin){
-    return this.httpClient.post<string>(this.baseUrl + '/security-service/login', user).pipe(
-      map((token) => {
-        if(token){
-          this.setCurrentUser(token);
-        }
+    return this.httpClient.post<LoginResponse>(this.baseUrl + '/security-service/login', user).pipe(
+      map((response) => {
+          this.setCurrentUser(response);
       })
     );
   }
@@ -52,19 +49,26 @@ export class AccountService {
     return this.httpClient.post(this.baseUrl + 'security-service/account/register', user);
   }
 
-  setCurrentUser(token: string){
-    const tokenObj = this.getDecodedToken(token);
+  setCurrentUser(loginResponse: LoginResponse){
+    const tokenObj = this.getDecodedToken(loginResponse.access_token);
     const user: User = {
       id: tokenObj.jti,
       email: tokenObj.sub,
       roles: tokenObj.roles,
-      token: token,
-      mainPhoto: tokenObj.mainPhoto,
+      token: loginResponse.access_token,
+      accessTokenExpired: this.getTokenExpirationDate(tokenObj.exp),
+      refreshToken: loginResponse.access_token,
       name: tokenObj.name
     };
 
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+  }
+
+  getTokenExpirationDate(expired: number): Date {
+      const date = new Date(0);
+      date.setUTCSeconds(expired);
+      return date;
   }
 
   getDecodedToken(token: string): Token{

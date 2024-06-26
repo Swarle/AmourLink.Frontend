@@ -1,4 +1,4 @@
-export interface PicturePositionChange{
+export interface PicturePosition {
   firstPictureId: string;
   secondPictureId: string;
 }

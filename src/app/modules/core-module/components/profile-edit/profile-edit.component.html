@@ -36,10 +36,10 @@
       <div (click)="openBasicInfoModal()" class="profile-edit__item profile-edit__item-basic">
         <div>
           <div class="profile-edit__font profile-edit__font-fz22">
-            {{profile.firstName}} {{profile.lastName}}, {{profile.age}}
+            {{profile.firstname}} {{profile.lastname}}, {{profile.age}}
           </div>
           <div class="profile-edit__font profile-edit__font-fz18">
-            {{profile.gender}}
+            {{ profile.gender === 'MALE' ? 'Чоловік' : 'Жінка' }}
           </div>
         </div>
         <div class="profile-edit__arrow">
@@ -51,13 +51,13 @@
           Про себе
         </div>
         <div class="profile-edit__textarea">
-          <app-resize-textarea (buttonClick)="submitBio()" [(text)]="profile.bio"></app-resize-textarea>
+          <app-resize-textarea (buttonClick)="updateProfile()" [(text)]="profile.bio"></app-resize-textarea>
         </div>
       </div>
     <div class="profile-edit__item profile-edit__item-info">
       <div class="profile-edit__font profile-edit__font-fz22">Інформація про тебе</div>
       <div class="profile-edit__item-list">
-        <div (click)="openInfoModal(info.id)" class="profile-edit__info" *ngFor="let info of infos">
+        <div (click)="openInfoModal(info.id)" class="profile-edit__info" *ngFor="let info of info">
           <div class="profile-edit__font profile-edit__font-fz22">{{info.title}}</div>
           <div class="profile-edit__info-right">
             <ng-container *ngIf="getInfoAnswerByTitleId(info.id)">
@@ -88,7 +88,7 @@
         Професія
       </div>
       <div class="profile-edit__textarea">
-        <app-resize-textarea (buttonClick)="submitOccupation()" [maxLength]="45" [(text)]="profile.occupation"></app-resize-textarea>
+        <app-resize-textarea (buttonClick)="updateProfile()" [maxLength]="45" [(text)]="profile.occupation"></app-resize-textarea>
       </div>
     </div>
 

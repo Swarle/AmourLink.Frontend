@@ -3,6 +3,7 @@ export interface User{
   token: string;
   email: string;
   roles: string[];
-  mainPhoto: string;
+  accessTokenExpired: Date;
+  refreshToken: string;
   name: string;
 }

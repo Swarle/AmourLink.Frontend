@@ -1,17 +1,20 @@
-<ng-container *ngIf="infoWithAnswers && info">
+<ng-container *ngIf="infoWithAnswers">
   <div class="modal-header">
     <h4 class="modal-title pull-left">{{infoWithAnswers.title}}</h4>
-    <button type="button" class="btn-close close" aria-label="Close" (click)="bsModalRef?.hide()">
+    <button type="button" class="btn-close close" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="modal-items">
-      <div [class.modal-item-selected]="answer.id === info.answer!.id"
+      <div [class.modal-item-selected]="answer.id === answerId"
            *ngFor="let answer of infoWithAnswers.answers"
            (click)="onItemClick(answer.id)" class="modal-item">
         {{answer.answer}}
       </div>
+      <div class="modal-item"
+           [class.modal-item-selected]="answerId === undefined"
+           (click)="onItemClick(undefined)">Не хочу відповідати</div>
     </div>
     <button [disabled]="!isListChanged"
             [class.button-disabled]="!isListChanged"

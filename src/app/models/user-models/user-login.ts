@@ -1,5 +1,5 @@
 export interface UserLogin{
   //TODO: Change to email
-  username: string;
+  email: string;
   password: string;
 }
