@@ -24,6 +24,7 @@ import { PreferenceModalComponent } from './components/recomendation/models/pref
 import {MatSliderModule} from "@angular/material/slider";
 import { LikeListComponent } from './components/like-list/like-list.component';
 import { WrapLetterDirective } from './directives/wrap-letter.directive';
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -40,21 +41,22 @@ import { WrapLetterDirective } from './directives/wrap-letter.directive';
     LikeListComponent,
     WrapLetterDirective,
   ],
-  imports: [
-    CommonModule,
-    CoreModuleRoutingModule,
-    CarouselModule.forRoot(),
-    ModalModule.forRoot(),
-    SharedModule,
-    ReactiveFormsModule,
-    CdkDropList,
-    CdkDrag,
-    CdkDropListGroup,
-    CdkDragPlaceholder,
-    FormsModule,
-    TextFieldModule,
-    MatSliderModule,
-  ],
+    imports: [
+        CommonModule,
+        CoreModuleRoutingModule,
+        CarouselModule.forRoot(),
+        ModalModule.forRoot(),
+        SharedModule,
+        ReactiveFormsModule,
+        CdkDropList,
+        CdkDrag,
+        CdkDropListGroup,
+        CdkDragPlaceholder,
+        FormsModule,
+        TextFieldModule,
+        MatSliderModule,
+        MatInputModule,
+    ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

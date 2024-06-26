@@ -10,7 +10,7 @@
       <div>
         <label class="label label__basic">Ім'я</label>
         <app-text-input
-          [formControl]="$any(formGroup.controls['firstName'])"
+          [formControl]="$any(formGroup.controls['firstname'])"
           [placeholder]="'Ім\'я'"
           [errorMap]="BasicInfoValidationMessages.firstName"
           [classList]="'input input__basic'"></app-text-input>
@@ -18,7 +18,7 @@
       <div>
         <label class="label label__basic">Фамілія</label>
         <app-text-input
-          [formControl]="$any(formGroup.controls['lastName'])"
+          [formControl]="$any(formGroup.controls['lastname'])"
           [placeholder]="'Фамілія'"
           [errorMap]="BasicInfoValidationMessages.lastName"
           [classList]="'input input__basic'"></app-text-input>
@@ -43,8 +43,8 @@
       <div>
         <label class="label label__basic">Стать:</label>
         <select class="input input__basic" formControlName="gender" name="gender">
-          <option [ngValue]="'Чоловік'">Чоловік</option>
-          <option [ngValue]="'Жінка'">Жінка</option>
+          <option [ngValue]="'MALE'">Чоловік</option>
+          <option [ngValue]="'FEMALE'">Жінка</option>
         </select>
       </div>
       <button [class.button-disabled]="formGroup.invalid || !formGroup.touched"

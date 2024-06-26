@@ -49,25 +49,3 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 }
 
-// if (response && response.body?.responseType !== 'Success'){
-//   if(response.body){
-//     switch (response.status){
-//       case 400:
-//         if(response.body.responseType === 'ValidationError'){
-//           throw new ValidationError(response.body.errorMessages, response.body.result);
-//         }
-//         else {
-//           throw response.body.errorMessages
-//         }
-//       case 401:
-//         //TODO: Delete jwt token when account service will be ready
-//         this.router.navigateByUrl('');
-//         break;
-//       case 404:
-//         throw new NotFoundError(response.body.errorMessages.get('default')!);
-//       case 500:
-//         //TODO: Make redirect to not found page when it will be ready
-//         break;
-//     }
-//   }
-// }

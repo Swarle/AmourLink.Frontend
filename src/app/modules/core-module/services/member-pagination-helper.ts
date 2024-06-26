@@ -1,5 +1,5 @@
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {PaginatedMemberResult} from "../../../models/pagiantion/memberPagination";
+import {PaginatedMemberResult} from "../../../models/pagiantion/member-pagination";
 import {ApiResponse} from "../../../models/api-infrastructure/api-response";
 import {map} from "rxjs";
 import {Feed} from "../../../models/feed";

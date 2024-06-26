@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../../environments/environment";
-import {ApiResponse} from "../../../models/api-infrastructure/api-response";
 import {Profile} from "../../../models/profile";
 import {AccountService} from "../../../services/account.service";
 import {map, take} from "rxjs";
 import {User} from "../../../models/user-models/user";
-import {BasicInfo} from "../../../models/basicInfo";
-import {PicturePositionChange} from "../../../models/picturePositionChange";
+import {BasicInfo} from "../../../models/basic-info";
+import {PicturePosition} from "../../../models/picture-position";
 import {Picture} from "../../../models/user-models/picture";
 import {Info} from "../../../models/user-models/info";
-import {H} from "@angular/cdk/keycodes";
-import {InfoWithAnswers} from "../../../models/user-models/infoWithAnswers";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +18,6 @@ export class ProfileEditService {
   constructor(private httpClient: HttpClient, private accountService: AccountService) { }
 
   getProfile(){
-    let params = new HttpParams();
-
     let currentUser: User | undefined;
 
     this.accountService.currentUser$.pipe(take(1)).subscribe({
@@ -32,21 +27,22 @@ export class ProfileEditService {
       }
     });
 
-    if(currentUser){
-      params = params.append('id', currentUser.id)
+    if(!currentUser)
+      return;
 
-      return this.httpClient.get<ApiResponse<Profile>>(this.baseUrl + '/user-service/profile', {params});
-    }
-    else
-      throw new Error("You should be logged in for this action");
+    return this.httpClient.get<Profile>(this.baseUrl + `/user-service/profile/${currentUser.id}`)
+      .pipe(
+        map(profile => {
+          profile.pictures = profile.pictures.sort((a, b) => a.position - b.position);
+          console.log(profile.pictures);
+
+          return profile;
+        })
+      );
   }
 
-  updateBasicInfo(value: BasicInfo){
-    return this.httpClient.put(this.baseUrl + '/user-service/profile/basic-info', value);
-  }
-
-  updateBio(bio: string){
-    return this.httpClient.put(this.baseUrl + '/user-service/profile/bio', {bio: bio});
+  updateProfile(profile: Profile){
+    return this.httpClient.put<Profile>(this.baseUrl + '/user-service/profile/update', profile);
   }
 
   removePicture(pictureId: string){
@@ -57,35 +53,16 @@ export class ProfileEditService {
     return this.httpClient.delete(this.baseUrl + '/user-service/profile/picture', {params})
   }
 
-  changePicturePosition(picturePositionChange: PicturePositionChange){
-    return this.httpClient.put(this.baseUrl + '/user-service/profile/change-picture-position', picturePositionChange);
+  changePicturePosition(picturePositionChange: PicturePosition){
+    return this.httpClient.put(this.baseUrl + '/user-service/profile/swap-pictures', picturePositionChange);
   }
 
   addPicture(picture: File){
-    return this.httpClient.post<ApiResponse<Picture>>(this.baseUrl + '/user-service/profile/picture', picture)
-      .pipe(map(response => {
-        if(response.result)
-          return response.result;
-        else
-          throw new Error('Response body should contain Picture entity');
-      }));
-  }
-
-  updateSchoolName(schoolName: string){
-    return this.httpClient.put(this.baseUrl + '/user-service/profile/school-name', {schoolName: schoolName});
-  }
-
-  updateOccupation(occupation: string){
-    return this.httpClient.put(this.baseUrl + '/user-service/profile/occupation', {occupation: occupation});
-  }
-
-  updateInfo(info: Info){
-    return this.httpClient.put(this.baseUrl + '/user-service/profile/info',
-      {titleId: info.id, answerId: info.answer!.id})
+    return this.httpClient.post<Picture>(this.baseUrl + '/user-service/profile/picture', picture);
   }
 
   getAllInfo(){
-    return this.httpClient.get<ApiResponse<any>>(this.baseUrl + '/user-service/info');
+    return this.httpClient.get<Info[]>(this.baseUrl + '/user-service/info/get-all');
   }
 
   getInfoById(id: string){
@@ -93,6 +70,11 @@ export class ProfileEditService {
 
     params = params.append('id', id);
 
-    return this.httpClient.get<ApiResponse<InfoWithAnswers>>(this.baseUrl + '/user-service/info', {params});
+    return this.httpClient.get<Info[]>(this.baseUrl + '/user-service/info/get-all', {params})
+      .pipe(
+        map(info => {
+          return info.find(i => i.id === id);
+        })
+      );
   }
 }

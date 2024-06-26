@@ -1,13 +1,15 @@
-<ng-container *ngIf="text">
-    <div [ngStyle]="{'color': text.length >= 500 ? 'red' : 'black'}" class="counter">{{text.length}}</div>
+<ng-container >
+    <div [ngStyle]="{'color': text.length >= maxLength ? 'red' : 'black'}"
+         class="counter">{{maxLength - text.length}}</div>
     <ng-container *ngIf="isShowSubmitBtn">
       <div (click)="onBtnClick()" class="btn_submit">
         <div class="fa fa-check"></div>
       </div>
     </ng-container>
     <textarea
-      cdkTextareaAutosize
-      cdkAutosizeMinRows="1"
+      (ngModelChange)="adjustTextareaHeight()"
+      #autosize
+      [(ngModel)]="text"
       (input)="onInput($event)"
-      [(ngModel)]="text"></textarea>
+      ></textarea>
 </ng-container>

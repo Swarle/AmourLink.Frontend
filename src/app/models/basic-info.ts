@@ -1,6 +1,6 @@
 export interface BasicInfo{
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   nationality: string;
   age: number;
   gender: string;
