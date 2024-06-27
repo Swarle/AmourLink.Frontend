@@ -31,6 +31,8 @@ export class AccountService {
     })
   }
 
+
+
   loginWithGoogle(tokenId: string){
     return this.httpClient.post<LoginResponse>(this.baseUrl + '/security-service/login/google', tokenId).pipe(
       map((response) => {
@@ -52,8 +54,7 @@ export class AccountService {
   }
 
   registerWithUserInfo(user: UserRegister){
-    //TODO:Pipe response
-    return this.httpClient.post(this.baseUrl + 'security-service/account/register', user);
+    return this.httpClient.post(this.baseUrl + '/security-service/users/add', user);
   }
 
   setCurrentUser(loginResponse: LoginResponse){
@@ -62,6 +63,7 @@ export class AccountService {
       id: tokenObj.jti,
       email: tokenObj.sub,
       roles: tokenObj.roles,
+      enabled: tokenObj.enabled,
       token: loginResponse.access_token,
       accessTokenExpired: this.getTokenExpirationDate(tokenObj.exp),
       refreshToken: loginResponse.refresh_token,
@@ -70,6 +72,11 @@ export class AccountService {
 
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+  }
+
+  clearCurrentUser(){
+    localStorage.removeItem('user');
+    this.currentUserSource.next(undefined);
   }
 
   getTokenExpirationDate(expired: number): Date {

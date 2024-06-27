@@ -12,12 +12,13 @@ import {catchError, map, Observable, tap} from 'rxjs';
 import {Router} from "@angular/router";
 import {ApiResponse} from "../models/api-infrastructure/api-response";
 import {HttpErrorContent} from "../models/api-infrastructure/http-error-content";
+import {AccountService} from "../services/account.service";
 
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private accountService: AccountService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
@@ -34,7 +35,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         console.log(err);
         switch (err.status){
           case 401:
-            //TODO: Delete jwt token when account service will be ready
+            this.accountService.clearCurrentUser();
             this.router.navigateByUrl('');
             break;
           case 500:

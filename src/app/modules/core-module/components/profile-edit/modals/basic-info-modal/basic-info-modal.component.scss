@@ -1,4 +1,7 @@
 .modal{
+  &-dialog{
+    max-width: max-content;
+  }
   &__basic{
     &-submit{
       margin-top: 20px;
@@ -12,5 +15,17 @@
       align-items: center;
       gap: 10px;
     }
+    &-wrapper{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+  }
+  &-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {MainPageComponent} from "./components/main-page/main-page.component";
 import {authGuard} from "./guards/auth.guard";
+import {roleGuard} from "./guards/role.guard";
 
 const routes: Routes = [
   {path: '', canActivate: [authGuard], component: MainPageComponent},

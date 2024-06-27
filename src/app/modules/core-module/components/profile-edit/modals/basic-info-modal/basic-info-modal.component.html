@@ -7,45 +7,60 @@
 <div class="modal-body">
   <div class="modal__basic">
     <form (ngSubmit)="submitBasicInfoModal()" [formGroup]="formGroup" autocomplete="off" class="modal__basic-form">
-      <div>
-        <label class="label label__basic">Ім'я</label>
-        <app-text-input
-          [formControl]="$any(formGroup.controls['firstname'])"
-          [placeholder]="'Ім\'я'"
-          [errorMap]="BasicInfoValidationMessages.firstName"
-          [classList]="'input input__basic'"></app-text-input>
-      </div>
-      <div>
-        <label class="label label__basic">Фамілія</label>
-        <app-text-input
-          [formControl]="$any(formGroup.controls['lastname'])"
-          [placeholder]="'Фамілія'"
-          [errorMap]="BasicInfoValidationMessages.lastName"
-          [classList]="'input input__basic'"></app-text-input>
-      </div>
-      <div>
-        <label class="label label__basic">Національність</label>
-        <app-text-input
-          [formControl]="$any(formGroup.controls['nationality'])"
-          [placeholder]="'Національність'"
-          [errorMap]="BasicInfoValidationMessages.nationality"
-          [classList]="'input input__basic'"></app-text-input>
-      </div>
-      <div>
-        <label class="label label__basic">Вік</label>
-        <app-text-input
-          [formControl]="$any(formGroup.controls['age'])"
-          [placeholder]="'Вік'"
-          [errorMap]="BasicInfoValidationMessages.age"
-          [type]="'number'"
-          [classList]="'input input__basic'"></app-text-input>
-      </div>
-      <div>
-        <label class="label label__basic">Стать:</label>
-        <select class="input input__basic" formControlName="gender" name="gender">
-          <option [ngValue]="'MALE'">Чоловік</option>
-          <option [ngValue]="'FEMALE'">Жінка</option>
-        </select>
+      <div class="modal__basic-wrapper">
+        <div class="modal__basic-column">
+          <div>
+            <label class="label label__basic">Ім'я</label>
+            <app-text-input
+              [formControl]="$any(formGroup.controls['firstname'])"
+              [placeholder]="'Ім\'я'"
+              [errorMap]="BasicInfoValidationMessages.firstName"
+              [classList]="'input input__basic'"></app-text-input>
+          </div>
+          <div>
+            <label class="label label__basic">Фамілія</label>
+            <app-text-input
+              [formControl]="$any(formGroup.controls['lastname'])"
+              [placeholder]="'Фамілія'"
+              [errorMap]="BasicInfoValidationMessages.lastName"
+              [classList]="'input input__basic'"></app-text-input>
+          </div>
+          <div>
+            <label class="label label__basic">Національність</label>
+            <app-text-input
+              [formControl]="$any(formGroup.controls['nationality'])"
+              [placeholder]="'Національність'"
+              [errorMap]="BasicInfoValidationMessages.nationality"
+              [classList]="'input input__basic'"></app-text-input>
+          </div>
+        </div>
+        <div class="modal__basic-column">
+          <div>
+            <label class="label label__basic">Зріст</label>
+            <app-text-input
+              [formControl]="$any(formGroup.controls['height'])"
+              [placeholder]="'Зріст'"
+              [type]="'number'"
+              [errorMap]="BasicInfoValidationMessages.height"
+              [classList]="'input input__basic'"></app-text-input>
+          </div>
+          <div>
+            <label class="label label__basic">Вік</label>
+            <app-text-input
+              [formControl]="$any(formGroup.controls['age'])"
+              [placeholder]="'Вік'"
+              [errorMap]="BasicInfoValidationMessages.age"
+              [type]="'number'"
+              [classList]="'input input__basic'"></app-text-input>
+          </div>
+          <div>
+            <label class="label label__basic">Стать:</label>
+            <select class="input input__basic" formControlName="gender" name="gender">
+              <option [ngValue]="'MALE'">Чоловік</option>
+              <option [ngValue]="'FEMALE'">Жінка</option>
+            </select>
+          </div>
+        </div>
       </div>
       <button [class.button-disabled]="formGroup.invalid || !formGroup.touched"
               [disabled]="formGroup.invalid || !formGroup.touched"

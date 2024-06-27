@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation} from '@angular/core';
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {Picture} from "../../../../models/user-models/picture";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
@@ -12,6 +12,11 @@ import {PicturePosition} from "../../../../models/picture-position";
 import {Profile} from "../../../../models/profile";
 import {HttpErrorContent} from "../../../../models/api-infrastructure/http-error-content";
 import {deepCopy} from "../../services/deep-clone";
+import {Degree} from "../../../../models/user-models/degree";
+import {AccountService} from "../../../../services/account.service";
+import {take} from "rxjs";
+import {User} from "../../../../models/user-models/user";
+import {UserCardComponent} from "../user-card/user-card.component";
 
 @Component({
   selector: 'app-profile-edit',
@@ -20,18 +25,34 @@ import {deepCopy} from "../../services/deep-clone";
   encapsulation: ViewEncapsulation.None
 })
 export class ProfileEditComponent implements OnInit{
+  user?: User;
   profile?: Profile;
   info?: Info[];
   basicInfoModalRef?: BsModalRef<BasicInfoModalComponent>;
   searchSchoolModalRef?: BsModalRef<SearchSchoolModalComponent>
   infoModalRef?: BsModalRef<InfoModalComponent>
+  bsUserCardModalRef?: BsModalRef;
+  @ViewChild('userCardModal') userCard?: TemplateRef<any>;
 
   constructor(private modalService: BsModalService, public bsModalRef: BsModalRef,
-              private profileEditService: ProfileEditService) {    }
+              private profileEditService: ProfileEditService,
+              private accountService: AccountService) {    }
 
   ngOnInit(): void {
-      this.loadProfile();
-      this.loadInfo();
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        if(user){
+          this.user = user;
+          if(user.roles.find(r => r.roleName === 'INCOMPLETE_USER')){
+            this.openBasicInfoModal();
+          }
+          else{
+            this.loadProfile();
+            this.loadInfo();
+          }
+        }
+      }
+    })
   }
 
   loadProfile(){
@@ -104,31 +125,50 @@ export class ProfileEditComponent implements OnInit{
 
           info.answers = info.answers.filter(a => a.id === answerId);
 
-          if(this.profile.info.find(i => i.id === infoId)){
-            const index = this.profile.info.findIndex(i => i.id === infoId);
-            console.log(index);
-            this.profile.info[index] = info;
-          }
-          else{
-            this.profile.info.push(info);
-        }
+          this.profileEditService.addInfoDetails(info).subscribe({
+            next: _ => {
+              if(this.profile && info){
+                if(this.profile.info.find(i => i.id === infoId)){
+                  const index = this.profile.info.findIndex(i => i.id === infoId);
+                  console.log(index);
+                  this.profile.info[index] = info;
+                }
+                else
+                  this.profile.info.push(info);
+              }
+            }
+          });
+
       }
       else {
         const index = this.profile.info.findIndex(i => i.id === infoId);
 
         if(index !== -1){
-          this.profile.info.splice(index, 1);
+          this.profileEditService.deleteInfoDetails(this.profile.info[index].id).subscribe({
+            next: _ => {
+              if(this.profile)
+                this.profile.info.splice(index, 1);
+            }
+          })
         }
       }
     }
   }
 
-  updateProfile(){
-    if(this.profile){
-      this.profileEditService.updateProfile(this.profile).subscribe({
-        next: profile => this.profile = profile
-      })
-    }
+  updateBio(value: string){
+    this.profileEditService.updateBio(this.profile!.id, value).subscribe({
+      next: _ => {
+        this.profile!.bio = value;
+      }
+    });
+  }
+
+  updateOccupation(value: string){
+    this.profileEditService.updateOccupation(this.profile!.id, value).subscribe({
+      next: _ => {
+        this.profile!.occupation = value;
+      }
+    });
   }
 
   openSearchSchoolModal(){
@@ -139,20 +179,42 @@ export class ProfileEditComponent implements OnInit{
   }
 
   submitSchoolName(schoolName: string){
-    // this.profileEditService.updateSchoolName(schoolName).subscribe({
-    //   next: _ => {
-    //     this.profile.degree.schoolName = schoolName;
-    //   }
-    // })
+    if(this.profile){
+      let degree = deepCopy(this.profile.degree);
+
+      if(degree){
+        degree.schoolName = schoolName;
+      }
+      else{
+        degree = {
+          degreeName: '',
+          degreeType: '',
+          schoolName: schoolName,
+        } as Degree
+      }
+
+      this.profileEditService.updateDegree(degree).subscribe({
+        next: _ => {
+          if(this.profile){
+            this.profile.degree = degree;
+          }
+        }
+      });
+    }
+  }
+
+  openUserCard(){
+    this.bsUserCardModalRef = this.modalService.show(this.userCard!,
+      Object.assign({}, {class: 'modal_user-card'}));
   }
 
   openBasicInfoModal(){
     if(this.profile){
-      const { firstname, lastname, nationality, age, gender } = this.profile;
+      const { firstname, lastname,height, nationality, age, gender } = this.profile;
 
       const initialState: ModalOptions = {
         initialState: {
-          basicInfo: {firstname, lastname, nationality, age, gender}
+          basicInfo: {firstname, lastname,height, nationality, age, gender}
         }
       };
 
@@ -160,13 +222,31 @@ export class ProfileEditComponent implements OnInit{
       this.basicInfoModalRef?.content?.onSubmit.subscribe(result => {
         this.submitBasicInfoModal(result);
       });
+    }else{
+      this.basicInfoModalRef = this.modalService.show(BasicInfoModalComponent);
+      this.basicInfoModalRef?.content?.onSubmit.subscribe(result => {
+        this.submitBasicInfoModal(result);
+      });
     }
   }
 
   submitBasicInfoModal(value: BasicInfo){
-    if(this.profile){
-      Object.assign(this.profile, value);
-      this.updateProfile();
+    if(this.user?.roles.find(r => r.roleName === 'INCOMPLETE_USER')){
+      this.profileEditService.createProfile(value).subscribe({
+        next: profile => {
+          this.profile = profile;
+          if(this.user)
+            this.accountService.refreshAccessToken(this.user.refreshToken);
+        }
+      });
+    }else{
+      this.profileEditService.updateBasicInfo(value).subscribe({
+        next: _ => {
+          if(this.profile){
+            Object.assign(this.profile, value);
+          }
+        }
+      });
     }
   }
 
@@ -183,11 +263,9 @@ export class ProfileEditComponent implements OnInit{
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
 
-    this.profileEditService.addPicture(file).subscribe({
-      next: picture => {
-        if(this.profile){
-          this.profile.pictures.push(picture)
-        }
+    this.profileEditService.addPicture(file, this.profile!.pictures.length).subscribe({
+      next: profile => {
+        this.profile = profile;
       }
     });
   }
