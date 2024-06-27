@@ -5,10 +5,12 @@ import {NavComponent} from "./components/nav/nav.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {ProfileEditComponent} from "./components/profile-edit/profile-edit.component";
 import {LikeListComponent} from "./components/like-list/like-list.component";
+import {roleGuard} from "../../guards/role.guard";
 
 const routes: Routes = [
   { path: '',
     component: NavComponent,
+    canActivate: [roleGuard],
     children: [
       { path: 'recommendation', component: RecommendationComponent, },
       { path: '',redirectTo: '/core/recommendation', pathMatch: 'full' },

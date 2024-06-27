@@ -26,12 +26,14 @@ export class BasicInfoModalComponent implements OnInit{
   }
 
   initializeBasicInfoForm(){
+    console.log(this.basicInfo);
       this.formGroup = this.formBuilder.group({
         firstname: [this.basicInfo.firstname, [Validators.required,Validators.minLength(2) ,Validators.maxLength(45)]],
         lastname: [this.basicInfo.lastname, [Validators.maxLength(45), Validators.minLength(2)]],
         nationality: [this.basicInfo.nationality, [Validators.minLength(5), Validators.maxLength(45)]],
         age: [this.basicInfo.age, [Validators.required, Validators.max(100), Validators.min(18)]],
-        gender: [this.basicInfo.gender, Validators.required]
+        gender: [this.basicInfo.gender, Validators.required],
+        height: [this.basicInfo.height, [Validators.max(250), Validators.min(100)]],
       });
   }
 

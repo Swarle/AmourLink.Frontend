@@ -6,6 +6,7 @@ import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "
 import {passwordRegex} from "../../helpers/passwordRegex";
 import {MainPageComponent} from "../main-page/main-page.component";
 import {Router} from "@angular/router";
+import {ActivateService} from "../../services/activate.service";
 
 @Component({
   selector: 'app-register',
@@ -34,7 +35,9 @@ export class RegisterComponent implements OnInit{
 
 
   constructor(private authService: SocialAuthService, private accountService: AccountService,
-              private formBuilder: FormBuilder, private router: Router) {
+              private formBuilder: FormBuilder,
+              private router: Router,
+              private activateService: ActivateService) {
   }
 
   ngOnInit(): void {
@@ -76,7 +79,7 @@ export class RegisterComponent implements OnInit{
   onSubmit(){
     this.accountService.registerWithUserInfo(this.registerForm.value).subscribe({
       next:  () => {
-        //TODO: There will be redirect to main page
+        this.activateService.openActivateModal();
       }
     })
   }

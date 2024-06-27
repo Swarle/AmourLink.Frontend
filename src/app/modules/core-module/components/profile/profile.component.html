@@ -1,7 +1,10 @@
-<section class="profile" *ngIf="user">
+<section class="profile">
   <div class="profile__header">
     <div class="profile__header-text">
       Профіль
+    </div>
+    <div (click)="logout()" class="profile__header-text">
+      Вийти
     </div>
     <div (click)="openProfileEditModal()" class="profile__icon-edit">
       <img src="assets/icons/profile/user-edit.svg" alt="">
@@ -9,10 +12,20 @@
   </div>
   <div class="profile__main">
     <div class="profile__photo">
-<!--      <img src="{{user.mainPhoto}}" alt="">-->
+      <ng-container *ngIf="profile">
+        <img [src]="profile.pictures[0].pictureUrl" alt="">
+      </ng-container>
+      <ng-container *ngIf="!profile">
+        <i class="fa fa-user"></i>
+      </ng-container>
     </div>
     <div class="profile__name">
-      {{user.name}}
+      <ng-container *ngIf="profile">
+        {{profile.firstname}} {{profile.lastname}}, {{profile.age}}
+      </ng-container>
+      <ng-container *ngIf="!profile">
+        Невідомо
+      </ng-container>
     </div>
   </div>
 </section>

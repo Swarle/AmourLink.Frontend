@@ -20,8 +20,7 @@ import {take} from "rxjs";
 export class ResizeTextareaComponent implements OnInit, AfterViewInit{
 
   @Input() text: string = '';
-  @Output() textChange = new EventEmitter<string>();
-  @Output() buttonClick = new EventEmitter();
+  @Output() buttonClick = new EventEmitter<string>();
   @Input() maxLength = 500;
   originalText?: string;
   @ViewChild('autosize') autosize?: ElementRef;
@@ -43,7 +42,6 @@ export class ResizeTextareaComponent implements OnInit, AfterViewInit{
         target.value = target.value.substring(0, this.maxLength);
         this.text = this.text.substring(0, this.maxLength);
       }
-      this.textChange.emit(this.text);
     }
   }
 
@@ -58,7 +56,7 @@ export class ResizeTextareaComponent implements OnInit, AfterViewInit{
 
   onBtnClick(){
     this.originalText = this.text;
-    this.buttonClick.emit();
+    this.buttonClick.emit(this.text);
   }
 
   adjustTextareaHeight(): void {

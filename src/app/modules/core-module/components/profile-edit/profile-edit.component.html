@@ -3,7 +3,7 @@
     <div (click)="bsModalRef.hide()" class="profile-edit__header-return profile-edit__arrow">
       <img src="assets/icons/profile/Arrow-left.png" alt="">
     </div>
-    <div class="profile-edit__header-show">
+    <div (click)="openUserCard()" class="profile-edit__header-show">
       Перегляд
     </div>
   </div>
@@ -51,7 +51,7 @@
           Про себе
         </div>
         <div class="profile-edit__textarea">
-          <app-resize-textarea (buttonClick)="updateProfile()" [(text)]="profile.bio"></app-resize-textarea>
+          <app-resize-textarea (buttonClick)="updateBio($event)" [text]="profile.bio"></app-resize-textarea>
         </div>
       </div>
     <div class="profile-edit__item profile-edit__item-info">
@@ -88,9 +88,17 @@
         Професія
       </div>
       <div class="profile-edit__textarea">
-        <app-resize-textarea (buttonClick)="updateProfile()" [maxLength]="45" [(text)]="profile.occupation!"></app-resize-textarea>
+        <app-resize-textarea (buttonClick)="updateOccupation($event)" [maxLength]="45" [text]="profile.occupation!"></app-resize-textarea>
       </div>
     </div>
 
     </div>
 </section>
+
+
+<ng-template #userCardModal>
+  <app-user-card
+    [isShowControls]="false"
+    [isShowButtons]="false"
+    [profile]="profile"></app-user-card>
+</ng-template>

@@ -17,4 +17,8 @@ export const BasicInfoValidationMessages = {
     ["max", "Вік має бути не більше 100-років"],
     ["min", "Вік має бути більше 18"]
   ]),
+  height: new Map<string, string>([
+    ["max", "Зріст має бути менше 250см"],
+    ["min", "Зріст має бути більше 100см"]
+  ]),
 }

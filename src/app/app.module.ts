@@ -21,13 +21,17 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import {ErrorInterceptor} from "./interceptors/error.interceptor";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {SharedModule} from "./modules/shared/shared.module";
+import { ActivateModalComponent } from './components/activate-modal/activate-modal.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    MainPageComponent
+    MainPageComponent,
+    ActivateModalComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,9 @@ import {SharedModule} from "./modules/shared/shared.module";
     SocialLoginModule,
     GoogleSigninButtonModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [
     {

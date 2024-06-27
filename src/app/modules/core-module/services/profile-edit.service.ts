@@ -9,6 +9,7 @@ import {BasicInfo} from "../../../models/basic-info";
 import {PicturePosition} from "../../../models/picture-position";
 import {Picture} from "../../../models/user-models/picture";
 import {Info} from "../../../models/user-models/info";
+import {Degree} from "../../../models/user-models/degree";
 
 @Injectable({
   providedIn: 'root'
@@ -52,24 +53,20 @@ export class ProfileEditService {
       );
   }
 
-  updateProfile(profile: Profile){
-    return this.httpClient.put<Profile>(this.baseUrl + '/user-service/profile/update', profile);
-  }
-
   removePicture(pictureId: string){
-    let params = new HttpParams();
-
-    params = params.append('id', pictureId);
-
-    return this.httpClient.delete(this.baseUrl + '/user-service/profile/picture', {params})
+    return this.httpClient.delete(this.baseUrl + `/user-service/profile/delete-picture/${pictureId}`)
   }
 
   changePicturePosition(picturePositionChange: PicturePosition){
     return this.httpClient.put(this.baseUrl + '/user-service/profile/swap-pictures', picturePositionChange);
   }
 
-  addPicture(picture: File){
-    return this.httpClient.post<Picture>(this.baseUrl + '/user-service/profile/picture', picture);
+  addPicture(picture: File, position: number){
+    const formData: FormData = new FormData();
+    formData.append('file', picture, picture.name);
+    formData.append('position', position.toString());
+
+    return this.httpClient.post<Profile>(this.baseUrl + '/user-service/profile/add-picture', formData);
   }
 
   getAllInfo(){
@@ -87,5 +84,42 @@ export class ProfileEditService {
           return info.find(i => i.id === id);
         })
       );
+  }
+
+  updateBasicInfo(basicInfo: BasicInfo){
+    return this.httpClient.put<Profile>(this.baseUrl + '/user-service/profile/update-basic', basicInfo);
+  }
+
+  updateBio(userId: string, bio: string){
+    return this.httpClient.put<Profile>(this.baseUrl + '/user-service/profile/update-bio', {
+      id: userId,
+      value: bio
+    });
+  }
+
+  updateDegree(degree: Degree){
+    return this.httpClient.put<Profile>(this.baseUrl + '/user-service/profile/update-degree', degree);
+  }
+
+  updateOccupation(userId: string, occupation: string){
+    return this.httpClient.put<Profile>(this.baseUrl + '/user-service/profile/update-occupation',{
+      id: userId,
+      value: occupation
+    });
+  }
+
+  addInfoDetails(info: Info){
+    return this.httpClient.put<Profile>(this.baseUrl + '/user-service/profile/add-info-details', {
+      infoId: info.id,
+      answerId: info.answers[0].id
+    })
+  }
+
+  deleteInfoDetails(infoId: string){
+    return this.httpClient.delete<Profile>(this.baseUrl + `/user-service/profile/delete-info-details/${infoId}`);
+  }
+
+  createProfile(basicInfo: BasicInfo){
+    return this.httpClient.post<Profile>(this.baseUrl + '/user-service/profile/add', basicInfo);
   }
 }
